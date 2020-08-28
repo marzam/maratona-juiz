@@ -29,11 +29,14 @@
     <div>
       <h1 align="center"> <?php echo $eventTitle1; ?> </h1>
       <h2 align="center"> <?php echo $judgeTitle; ?> </h2>
+
     </div>
 
     <div style="border: 2px solid #dadada; background-color: #dadada; height: 100px; width: 600px; border-radius: 8px; margin-left: auto; margin-right: auto;">
+      <a align="left" href="javascript:history.back()"> Voltar </a>
       <h3 align="center">Equibe: <strong><?php echo $name; ?></strong></h3>
       <h3 align="center"><?php echo $username; ?></h3>
+
       <br>
            <h1 align="center"> Submissão: </h1>
            <form action="upload.php" method="post" enctype="multipart/form-data">
@@ -68,6 +71,8 @@
         <li><a href="logout.html"> Sair </a></li>
       </ul>
     </div>
+
 -->
+
   </body>
 </html>

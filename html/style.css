@@ -348,3 +348,12 @@ color:#505050; line-height:1.3em;
 margin:15px 0 15px 0;
 padding:5px 5px 5px 5px; width: 200px
 }
+
+#footpage {
+	float: left;
+	padding-bottom: 10px;
+	padding-top: 10px;
+	text-align: center;
+	bottom: 0px;
+	width: 100%;
+}

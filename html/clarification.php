@@ -35,6 +35,7 @@
     </div>
 
     <div style="border: 2px solid #dadada; background-color: #dadada; height: 100px; width: 600px; border-radius: 8px; margin-left: auto; margin-right: auto;">
+      <a align="left" href="javascript:history.back()"> Voltar </a>
       <h3 align="center">Equibe: <strong><?php echo $name; ?></strong></h3>
       <h3 align="center"><?php echo $username; ?></h3>
 
