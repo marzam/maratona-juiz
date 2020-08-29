@@ -24,6 +24,18 @@
     <meta http-equiv="content-type" content="text/html; charset=UTF-8">
     <title><?php echo $pageTitle; ?></title>
     <link rel="stylesheet" href="style.css" type="text/css">
+    <script>
+      function delete_cookie(cookie_name){
+          var cookie_date = new Date ( );  // current date & time
+          cookie_date.setTime (cookie_date.getTime() - 1);
+          document.cookie = cookie_name += "=; expires=" + cookie_date.toGMTString();
+      }
+      function logout(){
+        delete_cookie('login-team');
+         window.open("login.php", "_self");
+      }
+
+    </script>
   </head>
   <body>
     <div>
@@ -38,8 +50,8 @@
         <li><a href="problems.php"> Problemas </a></li>
         <li><a href="submit.php"> Submissão </a></li>
         <li><a href="clarification.php"> Esclarecimento </a></li>
-        <li><a href="score.html"> Pontuação </a></li>
-        <li><a href="logout.html"> Sair </a></li>
+        <li><a href="score.php"> Pontuação </a></li>
+        <li><a href="javascript:logout()"> Sair </a></li>
       </ul>
     </div>
 <!--

@@ -36,7 +36,7 @@
       <h3 align="center"><?php echo $username; ?></h3>
       <ul>
         <li><a href="judge.html"> Jugar </a></li>
-        <li><a href="submit.html"> Esclarecer dúvidas </a></li>
+        <li><a href="clarificationjudge.php"> Esclarecer dúvidas </a></li>
         <li><a href="score.html"> Pontuação </a></li>
         <li><a href="logout.html"> Sair </a></li>
       </ul>
