@@ -25,26 +25,37 @@
        }
        function onClear(){
            document.getElementById("id_doubt").value = "";
+          document.getElementById("id_answerCheck").value = "-1";
         }
 
         function checkboxClick(obj){
+
           var obj_id = obj.id;
           var checkbox = document.getElementById(obj_id);
           var checked = checkbox.checked;
           var size = document.getElementById('id_numberrow').value;
+          var opt = -1;
           for (i = 1; i <= size; i++){
             var checkid = 'id_check_' + i.toString();
             if ( checkid != obj_id){
               //document.getElementById(checkid)
               document.getElementById(checkid).disabled = checked;
-
             }//end-if (document.getElementById(checkid) != obj_id){
+            else { opt = i; }
           }//end-for (i = 1; i <= size; i++){
-          if (checked)
-        }
+
+          var option = 'id_doubt_' + opt.toString();
+          if (checked){
+            document.getElementById('id_answerCheck').value = document.getElementById(option).value;
+
+          }else{
+            document.getElementById('id_answerCheck').value = '-1';
+          }//end-if (checked){
+        }//end-function checkboxClick(obj){
+
      </script>
   </head>
-  <body>
+  <body >
     <div>
       <h1 align="center"> <?php echo $eventTitle1; ?> </h1>
       <h2 align="center"> <?php echo $judgeTitle; ?> </h2>
@@ -67,7 +78,7 @@
              <?php
 
                $index = 1;
-               $sql = 'SELECT id, doubt, answer FROM clarification ORDER BY datetime DESC;';
+               $sql = 'SELECT id, doubt, answer FROM clarification WHERE answered = "0" ORDER BY datetime ASC;';
                $result   = execQuery($sql);
 
                if ($result->num_rows > 0) {
@@ -77,7 +88,7 @@
                     $bgColor = '#d0d0d0';
 
                    $idopt = 'id_doubt_' . $index;
-                   echo '<tr bgcolor="'. $bgColor .'" > <th  align="justify">' . $row['doubt'] .  '</a> </th> <th align="justify">  <input type="hidden" id="' . $idopt . '" name="' . $idopt . '" value="' . $index . '"> <input type="checkbox" id="id_check_'.$index.'" name="name1" onclick="checkboxClick(this);" />&nbsp; </th>  </tr>';
+                   echo '<tr bgcolor="'. $bgColor .'" > <th  align="justify">' . $row['doubt'] .  '</a> </th> <th align="justify">  <input type="hidden" id="' . $idopt . '" name="' . $idopt . '" value="' . $row['id'] . '"> <input type="checkbox" id="id_check_'.$index.'" name="name1" onclick="checkboxClick(this);" />&nbsp; </th>  </tr>';
                   $index += 1;
                  }//end-if($row = $result->fetch_assoc()) {
 
@@ -92,7 +103,7 @@
            <form action="saveclarificationjudge.php"  method="post">
              <?php echo '<input type="hidden" id="id_user" name="id_user" value="'. $id . '">'; ?>
              <textarea id="id_answer" rows = "5" cols = "82"  maxlength = "2048"  name = "id_answer"  style="resize: none;"></textarea><br>
-             <input type="hidden" id="id_answerCheck" name="answerCheck" value="-1">
+             <input type="hidden" id="id_answerCheck" name="id_answerCheck" value="-1">
              <input id="id_submit" type="submit" value="Enviar">
              <!-- <button  type="button" onclick="onSubmit();">Enviar</button> -->
              <button id="id_clear" type="button" onclick="onClear();">Limpa</button>

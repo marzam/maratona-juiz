@@ -54,7 +54,7 @@
                  while($row = $result->fetch_assoc()) {
                     echo '<tr> <th  align="justify">' . $row['doubt'] .  '</a> </th> <th align="justify"> ' . $row['answer'] . ' </th>  </tr>';
 
-                 }//end-if($row = $result->fetch_assoc()) {
+                 }//end-if($row = $result->fetch_assoc()) { 
 
                }//end-if ($result->num_rows > 0) {
              ?>
