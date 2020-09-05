@@ -8,8 +8,11 @@
   $sql = "LOCK TABLE submission WRITE";
   $result = execQuery($sql);
 
+  //SELECT submission.*,problem.path,problem.param,problem.time FROM submission
+  //INNER JOIN problem ON problem.id = submission.problem_id WHERE  submission.answer = "pending" DES submission.od LIMIT 1;
   # find first pending submission
-  $sql = 'SELECT submission.*,problem.path,problem.param,problem.time FROM problem,submission WHERE submission.answer = "pending" AND problem.id = submission.problem_id LIMIT 1;';
+  //$sql = 'SELECT submission.*,problem.path,problem.param,problem.time FROM problem,submission WHERE submission.answer = "pending" AND problem.id = submission.problem_id LIMIT 1;';
+  $sql = 'SELECT submission.*,problem.path,problem.param,problem.time FROM submission INNER JOIN problem ON problem.id = submission.problem_id WHERE  submission.answer = "pending" ORDER BY submission.id ASC LIMIT 1;';
   $result = execQuery($sql);
   if ($result->num_rows > 0) {
 	  if($row = $result->fetch_assoc()) {
@@ -20,10 +23,11 @@
   }
 
   # update submission to executing state
-  $sql = 'UPDATE submission SET answer = "executing" WHERE id = "' . $subid . '";';
-  $result = execQuery($sql);
+  #$sql = 'UPDATE submission SET answer = "executing" WHERE id = "' . $subid . '";';
+  #$result = execQuery($sql);
 
   # release table
-  $sql = "UNLOCK TABLES";
-  $result = execQuery($sql);
+  #$sql = "UNLOCK TABLES";
+  #$result = execQuery($sql);
+
 ?>

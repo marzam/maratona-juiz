@@ -22,11 +22,37 @@
 //  echo 'target  file:' . $target_file . '<br>';
 //  echo 'source file:'  . basename($_FILES["fileToUpload"]["name"]) . '<br>';
 
-  if ((move_uploaded_file($_FILES["fileToUpload"]["tmp_name"], $target_dir . $target_file)) && ($result == 1)) {
-    echo "The file ". basename( $_FILES["fileToUpload"]["name"]). " has been uploaded.";
-  } else {
-    echo "Sorry, there was an error uploading your file.";
-  }
-
-
 ?>
+
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta http-equiv="content-type" content="text/html; charset=UTF-8">
+    <title><?php echo $pageTitle; ?></title>
+    <link rel="stylesheet" href="style.css" type="text/css">
+  </head>
+  <body>
+    <div>
+      <h1 align="center"> <?php echo $eventTitle1; ?> </h1>
+      <h1 align="center"> <?php echo $eventTitle2; ?> </h1>
+      <h2 align="center"> <?php echo $judgeTitle;  ?> </h2>
+
+    </div>
+    <div class="loginborda" >
+      <?php
+      if ((move_uploaded_file($_FILES["fileToUpload"]["tmp_name"], $target_dir . $target_file)) && ($result == 1)) {
+        echo '<br><br>';
+        echo '<h3  align="left"> <strong>Arquivo</strong>:'. basename($_FILES["fileToUpload"]["name"]). '</h3>';
+        echo '<br>';
+        echo '<h3  align="center"><a href="javascript:window.open(\'mainteam.php\', \'_self\');"> Submissão realizada com sucesso! </a></h2>';
+
+        //echo '<script>';
+        //echo 'window.open("mainteam.php","_self")';
+        //echo '</script>';
+      }else
+        echo '<br><br><br><br>';
+        echo '<h2>Houve um erro na submissão <a href="javascript:window.open(\'mainteam.php\', \'_self\');"> Tente novamente</a> </h2>';
+      ?>
+    </div>
+  </body>
+</html>
