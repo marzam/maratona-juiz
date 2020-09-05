@@ -15,7 +15,7 @@
   $target_file = str_replace(' ', '', $lid . '-' .  $problem . '-' . $curr . '.tar.gz');
   $score       = '1';
 
-  $sql = 'INSERT INTO submission (user_id, problem_id, moment, file, score) VALUES ("' . $user_id . '", "' . $prob_id . '", "' . $curr . '", "' . $target_file . '", "'. $score .'");';
+  $sql = 'INSERT INTO submission (user_id, problem_id, moment, file, score) VALUES ("' . $user_id . '", "' . $prob_id . '", "' . $curr . '", "' . $target_dir . $target_file . '", "'. $score .'");';
   $result = execQuery($sql);
 //  echo $sql .'<br><br>' . $result . '<br>';
 

@@ -21,8 +21,13 @@
           echo '<script>';
           echo 'window.open("mainteam.php","_self")';
           echo '</script>';
-
-           //readfile("mainteam.php");
+        }else if ($row['type'] == '2'){//execnode
+          //echo 'team<br>'  ;
+          setcookie('login-node', $row['id'], time() + (60*60*24*1000));
+          echo 'Ok';
+          //echo '<script>';
+          //echo 'window.open("mainteam.php","_self")';
+          //echo '</script>';
         }else {
           echo 'Outros casos... <hr>';;
         }
