@@ -34,36 +34,13 @@
 
     <div style="border: 2px solid #dadada; background-color: #dadada; height: 100px; width: 600px; border-radius: 8px; margin-left: auto; margin-right: auto;">
       <a align="left" href="javascript:history.back()"> Voltar </a>
-      <h3 align="center">Equibe: <strong><?php echo $name; ?></strong></h3>
+      <h3 align="center">Juiz: <strong><?php echo $name; ?></strong></h3>
       <h3 align="center"><?php echo $username; ?></h3>
 
-      <br>
-           <h1 align="center"> Submissão: </h1>
-           <form action="upload.php" method="post" enctype="multipart/form-data">
-              <label for="problem" style="font-weight:bold">Selecione o problema:</label>
-              <select name="cmbProblem" id="id_cmbProblem">
-              <?php
-                   $sql = 'SELECT * FROM problem ORDER BY name;';
-                   $result   = execQuery($sql);
-                   if ($result->num_rows > 0) {
-                     while($row = $result->fetch_assoc()) {
-                        //echo '<tr> <th> <a href="' . $row['path'] . '">' . $row['name'] .  '</a> </th> <th align="justify"> ' . $row['description'] . ' </th>  </tr>';
-                       echo '<option value="' . $row['id'] . '">' . $row['name'] . '</option> ';
-                     }//end-if($row = $result->fetch_assoc()) {
-
-                 }//end-if ($result->num_rows > 0) {
-             ?>
-            </select>
-            <br><br>
-            <label for="problem" style="font-weight:bold">Selecione o arquivo: </label>
-            <input type="file"  accept=".tar.gz" name="fileToUpload" id="fileToUpload">
-            <br><br>
-            <div align="center"><input type="submit" value="Enviar código" name="submit"></div>
-         </form>
          <br>
          <hr>
          <?php
-           $sql = 'SELECT submission.*,problem.name  FROM submission INNER JOIN problem ON problem.id = submission.problem_id WHERE user_id = "' . $id . '" ORDER by submission.moment DESC;';
+           $sql = 'SELECT submission.*,problem.name  FROM submission INNER JOIN problem ON problem.id = submission.problem_id ORDER by submission.moment DESC;';
            $result   = execQuery($sql);
            if ($result->num_rows > 0) {
              echo '<h1 align="center"> Submissões realizadas </h1>';
