@@ -1,3 +1,4 @@
+#!/home/mzamith/Apps/anaconda3/bin/python
 import requests
 import os
 import timeit
@@ -5,9 +6,13 @@ import glob
 import shutil
 import json
 import getpass
+import sys
 from optparse import OptionParser
 from time import sleep
 from subprocess import PIPE, Popen
+
+# python3 maratona-execd.py -u http://192.168.1.162/ -v -n node01
+# -p <senha>
 
 # authenticate in the server
 def initialize(opt):
@@ -27,6 +32,7 @@ def initialize(opt):
         print(response.text)
     else:
         print('Erro de autenticação: nome de usuário e/ou senha inválido(s).')
+        print(response.text)
         exit()
 
     return
@@ -128,6 +134,7 @@ def exec_job(opt, job):
 
     # compile and exec original problem if needed
     if float(job['time']) < 0:
+        
         response = opt.session.get(opt.url + job['path'])
         srczip = os.path.join(tmpdir, 'source.tar.gz')
         with open(srczip, "wb") as f:
@@ -146,18 +153,22 @@ def exec_job(opt, job):
         shutil.rmtree(srcpath)
 
         # update problem time in server
-        data = {'prob_id': job['problem_id'],
-                'time': probtime}
+        data = {'prob_id': job['problem_id'], 'time': probtime, 'nameLogin': opt.name, 'namePassed': opt.pw}
         response = opt.session.post(url = opt.url+'setprobtime.php', data = data)
         print(response.text)
+
     else:
         probtime = float(job['time'])
+        print(probtime)
 
     # compile and exec submission
-    response = opt.session.get(opt.url + 'uploads/' + job['file'])
+    response = opt.session.get(opt.url + job['file'])
     srczip = os.path.join(tmpdir, 'source.tar.gz')
+    
     with open(srczip, "wb") as f:
         f.write(response.content)
+
+
     shutil.unpack_archive(srczip, tmpdir)
     
     # find src file
@@ -165,6 +176,7 @@ def exec_job(opt, job):
     binfile = compile_make(srcpath)
 
     # execute
+
     subtime = exec(binfile, job['param'], 30)
 
     # clean tmp folder
@@ -172,14 +184,14 @@ def exec_job(opt, job):
     shutil.rmtree(srcpath)
 
     # update problem time in server
-    data = {'sub_id': job['id'],
-            'time': subtime}
+    data = {'id': job['id'], 'prob_id': job['problem_id'], 'time': subtime, 'nameLogin': opt.name, 'namePassed': opt.pw, 'answer': 'accepted'}
+    
     response = opt.session.post(url = opt.url+'setsubtime.php', data = data)
     print(response.text)
 
-    os.rmdir('tmp')
+   # os.rmdir('tmp')
 
-    return
+   
 
 # main function
 def main():
@@ -195,25 +207,27 @@ def main():
 
     # start session
     opt.session = requests.Session()
-
+    
     # authenticate in the server
-    initialize(opt)
-
+  
+    #initialize(opt)
     # verify new jobs in loop
     while True:
 
         response = opt.session.get(opt.url + 'getjob.php')
+        
         if response.ok and response.text != "":
             job = json.loads(response.text)
             if (opt.verbose): print("new_job: ", job)
-
+            
             # execute job
             exec_job(opt, job)
 
         # delay before getting new job
-        sleep(5)
+        sys.exit(0)
+        
 
-    return
+   
 
 if __name__ == "__main__":
     main()
