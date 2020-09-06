@@ -53,21 +53,22 @@ function simpleScoreTable(){
 
 function nodelogin($user, $passwd){
   $sql = 'SELECT id,type FROM login WHERE username = "' . $user . '" AND password = "' . $passwd . '";';
+
   $result = execQuery($sql);
   if ($result->num_rows > 0) {
       if($row = $result->fetch_assoc()) {
         if ($row['type'] == '2'){//execnode
-          echo 'Ok';
+          echo 'PHP Ok';
 
         }else {
-          die("Error to login exec node");
+          die("PHP ERROR: there is not enough permission");
         }
 
       }//end-if($row = $result->fetch_assoc()) {
 
   }//end-if ($result->num_rows > 0) {
   else{
-     die("Error to login exec node");
+     die("PHP ERROR: wrong user or login");
   }
 
 }

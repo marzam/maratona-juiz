@@ -60,7 +60,31 @@
             <br><br>
             <div align="center"><input type="submit" value="Enviar código" name="submit"></div>
          </form>
+         <br>
+         <hr>
+         <?php
+           $sql = 'SELECT submission.*,problem.name  FROM submission INNER JOIN problem ON problem.id = submission.problem_id WHERE user_id = "' . $id . '" ORDER by submission.moment DESC;';
+           $result   = execQuery($sql);
+           if ($result->num_rows > 0) {
+             echo '<h1 align="center"> Submissões realizadas </h1>';
+             echo '<table border="0" style="width:100%;">';
+             $index = 1;
+             while($row = $result->fetch_assoc()) {
+                 $bgColor = '#dfdfdf';
+                 if (($index % 2) == 0)
+                   $bgColor = '#d0d0d0';
+
+               echo '<tr bgcolor="'. $bgColor .'" > <th>' . $row['id'] .  '</th><th> ' . $row['moment'] . ' </th><th> ' . $row['name'] . ' </th> <th> ' . $row['answer'] . ' </th> <th> ' . $row['score'] . ' </th> </tr>';
+               $index++;
+             }//end-if($row = $result->fetch_assoc()) {
+
+           }//end-
+         ?>
+
     </div>
+
+
+
 <!--
     <div>
       <ul>

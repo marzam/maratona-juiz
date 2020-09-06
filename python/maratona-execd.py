@@ -7,11 +7,12 @@ import shutil
 import json
 import getpass
 import sys
+import subprocess
 from optparse import OptionParser
 from time import sleep
 from subprocess import PIPE, Popen
 
-# python3 maratona-execd.py -u http://192.168.1.162/ -v -n node01
+# python3 ./maratona-execd.py  -u http://192.168.1.21/ -v -n node01 -p node01
 # -p <senha>
 
 # authenticate in the server
@@ -39,13 +40,26 @@ def initialize(opt):
 
 # find src file
 def find_mkfile(path):
+    rootaux = None
+    answer = 'no makefile'
     for root, dirs, files in os.walk(path):
         for name in files:
             if name == "Makefile":
-                return root
+                #return root, ''
+                print(root)
+
+                rootaux = root
+                answer = ''
+    return rootaux, answer
+
+
 
 # exec the binary file
-def exec(binfile, param, mtimeout):
+def exec(binfile, srcpath, param, mtimeout):
+    cur_path = os.getcwd()
+    source_path = srcpath
+    os.chdir(source_path)
+
     str = '{0} {1}'.format(binfile, param)
     pprocess = Popen(str, shell=True, stdout=PIPE, stderr=PIPE)
     print("    Script PID:", os.getpid())
@@ -66,12 +80,13 @@ def exec(binfile, param, mtimeout):
             a = timeit.default_timer()
             stdout, stderr = pprocess.communicate()
             b = timeit.default_timer()
-    except TimeoutExpired:
+    except subprocess.TimeoutExpired:
         Popen.kill(pprocess)
-        a = 0
+        a = 1
         b = 0
         stderr = b'timeout'
 
+    os.chdir(cur_path)
     elapsedtime = b - a
 
     print('Executed file:', pprocess.pid, ' elapsedtime: ', elapsedtime, ' in seconds')
@@ -89,7 +104,8 @@ def exec(binfile, param, mtimeout):
 
 # Compile project in according to created makefile file
 def compile_make(path, clean = False):
-    flag_ok = 1
+    #flag_ok = 1
+    answer = ''
     cur_path = os.getcwd()
     source_path = path
     os.chdir(source_path)
@@ -112,6 +128,7 @@ def compile_make(path, clean = False):
 
     if len(stderr) > 0:
         str_sterr = '\t\t' + stderr.decode('utf-8').replace('\n', '\n\t\t')
+        answer = 'compilation error'
         print('\tERR:')
         print(str_sterr)
 
@@ -120,11 +137,12 @@ def compile_make(path, clean = False):
     files = glob.glob(path + '/*')
     binfile = max(files, key=os.path.getctime)
 
-    return binfile
+    return binfile, answer
 
 # execute job
 def exec_job(opt, job):
-    
+
+    answer = ''
     # make temp dir
     if os.path.exists('tmp'):
         shutil.rmtree('tmp')
@@ -142,12 +160,11 @@ def exec_job(opt, job):
         shutil.unpack_archive(srczip, tmpdir)
 
         # find src file
-        srcpath = find_mkfile(tmpdir)
-        binfile = compile_make(srcpath)
+        srcpath, anwser = find_mkfile(tmpdir)
+        binfile, anwser = compile_make(srcpath)
 
         # execute
-        probtime = exec(binfile, job['param'], 30)
-
+        probtime = exec(binfile, srcpath, job['param'], -1)
         # clean tmp folder
         os.remove(srczip)
         shutil.rmtree(srcpath)
@@ -155,11 +172,11 @@ def exec_job(opt, job):
         # update problem time in server
         data = {'prob_id': job['problem_id'], 'time': probtime, 'nameLogin': opt.name, 'namePassed': opt.pw}
         response = opt.session.post(url = opt.url+'setprobtime.php', data = data)
-        print(response.text)
+        if (opt.verbose): print(response.text)
 
     else:
         probtime = float(job['time'])
-        print(probtime)
+        if (opt.verbose): print(probtime)
 
     # compile and exec submission
     response = opt.session.get(opt.url + job['file'])
@@ -172,22 +189,41 @@ def exec_job(opt, job):
     shutil.unpack_archive(srczip, tmpdir)
     
     # find src file
-    srcpath = find_mkfile(tmpdir)
-    binfile = compile_make(srcpath)
+    srcpath, answer = find_mkfile(tmpdir)
+    if answer != '':
+        data = {'id': job['id'], 'nameLogin': opt.name, 'namePassed': opt.pw, 'answer': answer}
+        if (opt.verbose): print(data)
+        response = opt.session.post(url=opt.url + 'setsubtime.php', data=data)
+        if (opt.verbose): print(response.text)
+        return
+
+    binfile, answer = compile_make(srcpath)
+    if answer != '':
+        data = {'id': job['id'], 'nameLogin': opt.name, 'namePassed': opt.pw, 'answer': answer}
+        response = opt.session.post(url=opt.url + 'setsubtime.php', data=data)
+        if (opt.verbose): print(response.text)
+        return
+
+
 
     # execute
+    subtime = exec(binfile, srcpath, job['param'], probtime)
 
-    subtime = exec(binfile, job['param'], 30)
-
-    # clean tmp folder
     os.remove(srczip)
     shutil.rmtree(srcpath)
 
+    if subtime < 0.0:
+        data = {'id': job['id'], 'nameLogin': opt.name, 'namePassed': opt.pw, 'answer': 'time out'}
+        response = opt.session.post(url=opt.url + 'setsubtime.php', data=data)
+        if (opt.verbose): print(response.text)
+        return
+
+    # clean tmp folder
+
     # update problem time in server
     data = {'id': job['id'], 'prob_id': job['problem_id'], 'time': subtime, 'nameLogin': opt.name, 'namePassed': opt.pw, 'answer': 'accepted'}
-    
     response = opt.session.post(url = opt.url+'setsubtime.php', data = data)
-    print(response.text)
+    if (opt.verbose):print(response.text)
 
    # os.rmdir('tmp')
 
@@ -224,7 +260,9 @@ def main():
             exec_job(opt, job)
 
         # delay before getting new job
-        sys.exit(0)
+        sleep(5)
+        print('Next')
+        #sys.exit(0)
         
 
    

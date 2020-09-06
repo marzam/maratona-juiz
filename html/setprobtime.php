@@ -10,7 +10,7 @@
   $sql = 'UPDATE problem SET time = "'. $time .'" WHERE id = "'. $prob_id .'"';
   $result = execQuery($sql);
   if ($result != NULL)
-    echo 'Ok' . PHP_EOL;
+    echo 'PHP Ok' . PHP_EOL;
   else
-    echo 'ERROR: ' . $sql . PHP_EOL;
+    echo 'PHP ERROR: ' . $sql . PHP_EOL;
 ?>

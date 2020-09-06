@@ -49,9 +49,10 @@
         //echo '<script>';
         //echo 'window.open("mainteam.php","_self")';
         //echo '</script>';
-      }else
+      }else{
         echo '<br><br><br><br>';
         echo '<h2>Houve um erro na submissão <a href="javascript:window.open(\'mainteam.php\', \'_self\');"> Tente novamente</a> </h2>';
+      }
       ?>
     </div>
   </body>
