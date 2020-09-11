@@ -42,11 +42,11 @@ function compilitionError($id, $answer){
   $ptime   = $_POST['time'];
   $answer  = $_POST['answer'];
 
-
+/*
   echo 'PHP user  : ' . $user .  PHP_EOL;
   echo 'PHP paswd : ' . $passwd .  PHP_EOL;
   echo 'PHP answer: ' . $answer .  PHP_EOL;
-
+*/
   nodelogin($user, $passwd);
 /*
   echo '$ptime: ' . $ptime . PHP_EOL;

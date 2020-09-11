@@ -48,7 +48,7 @@
                $result   = execQuery($sql);
                if ($result->num_rows > 0) {
                  while($row = $result->fetch_assoc()) {
-                    echo '<tr> <th> <a href="' . $row['path'] . '">' . $row['name'] .  '</a> </th> <th align="justify"> ' . $row['description'] . ' </th>  </tr>';
+                    echo '<tr> <th> <a href="' . $row['file'] . '">' . $row['name'] .  '</a> </th> <th align="justify"> ' . $row['description'] . ' </th>  </tr>';
 
                  }//end-if($row = $result->fetch_assoc()) {
 
