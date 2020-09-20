@@ -14,7 +14,6 @@
 
     </div>
     <div class="loginborda" >
-      <br><br>
       <form method="post" action="dologin.php" >
         <table style="width: 90%" border="0" align="center">
             <tr>
@@ -32,11 +31,9 @@
             </tr>
 
         </table>
-        <p><br>
-        </p>
-        <p align="center">
-            <input type="submit" value="Logar" />
-        </p>
+        <p align="center"> <input value="Logar" type="submit"> </p>
+        <p align="center"> <a href="forgot.html">esqueceu sua senha ?</a> </p>
+        <p align="center"> <a href="register.php">novo usuário ?</a> </p>
       </form>
     </div>
   </body>

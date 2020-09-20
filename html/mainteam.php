@@ -45,7 +45,7 @@
     <hr>
     <div class="loginborda">
       <h3 align="center">Equibe: <strong><?php echo $name; ?></strong></h3>
-      <h3 align="center"><?php echo $username; ?></h3>
+      <h3 align="center"><?php echo '<a href="update.php">' . $username . '</a>';  ?></h3>
       <ul>
         <li><a href="problems.php"> Problemas </a></li>
         <li><a href="submit.php"> Submissão </a></li>

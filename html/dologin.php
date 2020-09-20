@@ -3,7 +3,7 @@
   include 'db.php';
   $user   = $_POST['nameLogin'];
   $passwd = $_POST['namePassed'];
-  $sql = 'SELECT id,type FROM login WHERE username = "' . $user . '" AND password = "' . $passwd . '";';
+  $sql = 'SELECT id,type FROM login WHERE username = "' . $user . '" AND password = "' . md5($passwd) . '";';
   $result = execQuery($sql);
 
 
