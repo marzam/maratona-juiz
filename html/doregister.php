@@ -1,11 +1,13 @@
 <?php
 //INSERT INTO login (name, password, score, type, username) values ('Marcelo', '12345', '0', '1', 'mzamith')
   include 'db.php';
+  /*
   echo $_POST['id_name']  . '<br>';
   echo $_POST['id_login']  . '<br>';
   echo $_POST['id_passwA']  . '<br>';
   echo $_POST['id_aux']  . '<br>';
   echo $_POST['id_email']  . '<br>';
+  */
   //clear cookie
   setcookie('register', '', time() - 3600, '/'); // empty value and old timestamp
   //SELECT id FROM login WHERE username = "mzamith1" OR email = 'mzamith@hotmail.com';
