@@ -2,7 +2,7 @@
   include 'vars.php';
   include 'db.php';
 
-  $id       = $_COOKIE['login-team'];
+  $id       = $_COOKIE['login-judge'];
   $username = 'desconhecido';
   $name     = 'desconhecido';
   $sql      = 'SELECT username, name FROM login WHERE id = "' . $id . '"; ';
