@@ -12,7 +12,7 @@ from optparse import OptionParser
 from time import sleep
 from subprocess import PIPE, Popen
 
-# python3 ./maratona-execd.py  -u http://192.168.1.21/ -v -n node01 -p node01
+# python3 ./maratona-execd.py  -u http://192.168.1.21/ -v -n node01 -p 12345
 # -p <senha>
 
 # authenticate in the server

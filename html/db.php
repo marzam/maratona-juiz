@@ -52,7 +52,7 @@ function simpleScoreTable(){
 }
 
 function nodelogin($user, $passwd){
-  $sql = 'SELECT id,type FROM login WHERE username = "' . $user . '" AND password = "' . $passwd . '";';
+  $sql = 'SELECT id,type FROM login WHERE username = "' . $user . '" AND password = "' . md5($passwd) . '";';
 
   $result = execQuery($sql);
   if ($result->num_rows > 0) {
