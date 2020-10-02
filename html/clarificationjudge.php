@@ -88,7 +88,7 @@
                     $bgColor = '#d0d0d0';
 
                    $idopt = 'id_doubt_' . $index;
-                   echo '<tr bgcolor="'. $bgColor .'" > <th  align="justify">' . $row['doubt'] .  '</a> </th> <th align="justify">  <input type="hidden" id="' . $idopt . '" name="' . $idopt . '" value="' . $row['id'] . '"> <input type="checkbox" id="id_check_'.$index.'" name="name1" onclick="checkboxClick(this);" />&nbsp; </th>  </tr>';
+                   echo '<tr bgcolor="'. $bgColor .'" > <th  align="justify">' . $row['doubt'] .  '</a> </th> <th align="justify">  <input type="hidden" id="' . $idopt . '" name="' . $idopt . '" value="' . $row['id'] . '"> <input type="checkbox" id="id_check_'.$index.'" name="id_check_'.$index.'"  onclick="checkboxClick(this);" />&nbsp; </th>  </tr>';
                   $index += 1;
                  }//end-if($row = $result->fetch_assoc()) {
 

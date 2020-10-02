@@ -48,7 +48,7 @@
       <h3 align="center"><?php echo $username; ?></h3>
       <ul>
         <li><a href="addproblem.php"> Cadastrar problema </a></li>
-        <li><a href="judge.html"> Jugar </a></li>
+        <li><a href="tojudge.php"> Jugar </a></li>
         <li><a href="clarificationjudge.php"> Esclarecer dúvidas </a></li>
         <li><a href="submitjudge.php"> Submissões realizadas </a></li>
         <li><a href="score-judged.php"> Pontuação </a></li>

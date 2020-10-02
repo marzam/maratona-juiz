@@ -181,7 +181,6 @@ def exec_job(opt, job):
     # compile and exec submission
     response = opt.session.get(opt.url + job['file'])
     srczip = os.path.join(tmpdir, 'source.tar.gz')
-    
     with open(srczip, "wb") as f:
         f.write(response.content)
 
