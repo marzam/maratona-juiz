@@ -31,8 +31,54 @@
           document.getElementById(idelement).value = '1';
         
       }
-      function update(){
-          alert('update');
+      function updateSendXML(){
+          var doc = document.implementation.createDocument("", "", null);
+          var record = doc.createElement("record");
+          var data = doc.createElement("data");
+          
+          var mIndex = document.getElementById('id_index_value').value;
+          //alert('update:' + mIndex.toString());
+          var flag = 0;
+          //id_updated_
+          for (var i = 0; i < mIndex; i++){
+            var id = 'id_updated_' +  i.toString();
+            var opt = document.getElementById(id).value;
+            var recID = '';
+            var recAnswer = '';
+            var recElapsedtime = '';
+            
+            if (opt == '1'){
+              flag = 1;
+              var data = doc.createElement("data");
+              recID           = document.getElementById('id_submissionID_' +  i.toString()).value;
+              recAnswer       = document.getElementById('id_answser_' +  i.toString()).value;
+              recElapsedtime  = document.getElementById('id_elapsedtime_' +  i.toString()).value;
+              data.setAttribute('id', recID);
+              data.setAttribute('answer', recAnswer);
+              data.setAttribute('elapsedtime', recElapsedtime);
+              record.appendChild(data);
+              //alert('Registro: ' + recID + '\n' + recAnswer + '\n' + recElapsedtime);
+              //alert('Atualizado em:' + i.toString());
+            }//end-if (opt == '1'){
+              
+          }//end-for (var i = 0; i < mIndex; i++){
+          doc.appendChild(record);
+          if (flag == 1){
+              var xmlHttp = new XMLHttpRequest();
+              //          xmlHttp.open("POST", "http://192.168.1.21/toupdatesubmmity.php", true); // true for asynchronous
+              xmlHttp.open("POST", "toupdatesubmmity.php", true); // true for asynchronous
+              xmlHttp.setRequestHeader('Content-type', 'application/xml; charset=utf-8');
+              var myXML = new XMLSerializer();
+              var msg = myXML.serializeToString(doc);
+              xmlHttp.send(msg);
+              window.history.back();
+          }else{
+            alert('Não existe registros para serem atualizados!');
+          }
+          
+          //alert("fim");
+
+          
       }
       function isNumberKey(evt, index){
           var charCode = (evt.which) ? evt.which : evt.keyCode;
@@ -61,7 +107,7 @@
 
          <br>
          <hr>
-         <button type="button" onclick="update();">Update</button> 
+         <button type="button" onclick="updateSendXML();">Update</button> 
          <?php
            //$sql = 'SELECT submission.*,problem.name  FROM submission INNER JOIN problem ON problem.id = submission.problem_id ORDER by submission.moment DESC;';
            $sql = 'SELECT login.username, submission.*,problem.name  FROM submission  INNER JOIN problem ON problem.id = submission.problem_id  INNER JOIN login ON login.id = submission.user_id  ORDER by submission.moment DESC;';
@@ -89,10 +135,12 @@
               echo '</select>';
                // <option value="accepted">accepted</option> <option value="wrong answer" selected>wrong answer</option> <option value="runtime error">runtime error</option> <option value="compilation error">compilation error</option> <option value="pending">pending</option></select>';
                echo ' </th> <th> ' . number_format($row['score'] , 3, '.', ','). ' </th>';
-               echo ' </th> <th> <input type="text" id="id_elapsedtime_'.  ($index - 1) .'" value="' . number_format($row['elapsedtime'] , 5, '.', ','). '" maxlength="20" size="22" onkeypress="return isNumberKey(event, '. ($index - 1) .')" > </th> <th> <input type="hidden" id="id_updated_' . ($index-1) . '"  name="numberrow" value="0"> </th> </tr>';
+               echo ' </th> <th> <input type="text" id="id_elapsedtime_'.  ($index - 1) .'" value="' . number_format($row['elapsedtime'] , 5, '.', ','). '" maxlength="20" size="22" onkeypress="return isNumberKey(event, '. ($index - 1) .')" > </th> <th> <input type="hidden" id="id_updated_' . ($index-1) . '"  name="numberrow" value="0"> <input type="hidden" id="id_submissionID_'.  ($index - 1) .'" name="numberrow" value="'.   $row['id'] .'"> </th> </tr>';
                $index++;
              }//end-if($row = $result->fetch_assoc()) {
-
+             echo '</table>';
+             echo '<br>';
+             echo '<input type="hidden" id="id_index_value"  name="numberrow" value="' . ($index-1) . '">';
            }//end-
          ?>
 

@@ -24,6 +24,10 @@
     <meta http-equiv="content-type" content="text/html; charset=UTF-8">
     <title><?php echo $pageTitle; ?></title>
     <link rel="stylesheet" href="style.css" type="text/css">
+    <script>
+
+    </script>
+    
   </head>
   <body>
     <div>
@@ -51,9 +55,11 @@
                  if (($index % 2) == 0)
                    $bgColor = '#d0d0d0';
                $phpdate = strtotime( $row['moment'] );
-               echo '<tr bgcolor="'. $bgColor .'" > <th>' . $row['id'] .  '</th><th> ' . date( 'd/m/Y H:i:s', $phpdate ) . ' </th><th> ' . $row['name'] . ' </th> <th> ' . $row['answer'] . ' </th> <th> ' . number_format($row['score'] , 5, '.', ','). ' </th> </tr>';
+               echo '<tr bgcolor="'. $bgColor .'" > <th>' . $row['id'] .  '</th><th> ' . date( 'd/m/Y H:i:s', $phpdate ) . ' </th><th> ' . $row['name'] . ' </th> <th> ' . $row['answer'] . ' </th> <th> ' . number_format($row['score'] , 5, '.', ','). ' </th>  <th> <a href="' . $row['file'] . '" download> download </a> </th> </tr>';
                $index++;
              }//end-if($row = $result->fetch_assoc()) {
+             echo '<br></table>';
+             
 
            }//end-
          ?>
