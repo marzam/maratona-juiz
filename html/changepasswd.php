@@ -40,25 +40,25 @@
 
     </div>
     <div class="loginborda" >
-      <form method="post" action="dologin.php" >
+      <form method="post" action="updatepasswd.php" >
 <?php       echo '<input type="hidden" id="id_id" name="id_id" value="'. $id .'">'; ?>
           <table style="width: 90%" border="0" align="center">
                 <tr>
                     <td><label for="username">Username:</label> </td>
                 </tr>
                 <tr>
-<?php                echo '<td><input type="text" id="id_username" name="id_username" minlength="60" readonly="readonly" value="'. $username  .'" ></td>'; ?>
+                    <?php echo '<td><input type="text" id="id_username" name="id_username" minlength="60" readonly="readonly" value="'. $username  .'" ></td>'; ?>
+                </tr>
+
+                <tr>
+                    <td><label for="pass">Password:</label></td>
+                </tr>
+
+                <tr>
+                    <td><input id="id_passwA" name="id_passwA" type="password" maxlength = "30" value=""  onkeyup="checkIsOkPasswd();"></td>
                 </tr>
                 <tr>
-                    <td><label for="pass">Password:</label><br>
-                </td>
-                </tr>
-                <tr>
-                    <td><input id="id_passwA" name="id_passwA" type="password" maxlength = "30" value="" ></td>
-                </tr>
-                <tr>
-                    <td><label for="pass">Confirm password:</label><br>
-                </td>
+                    <td><br><label >Confirm password:</label><br></td>
                 </tr>
                 <tr>
                     <td><input id="id_passwB" name="id_passwB" type="password" maxlength = "30"  value=""   onkeyup="checkIsOkPasswd();"></td>
