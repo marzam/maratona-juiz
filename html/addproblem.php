@@ -20,6 +20,57 @@
     <title><?php echo $pageTitle; ?></title>
     <link rel="stylesheet" href="style.css" type="text/css">
   </head>
+  <script>
+  function initState(){
+    if (!confirm("Deseja limpar todos os campos ?"))  
+      return;
+  
+    document.getElementById('id_output').value = '-1';
+    
+    document.getElementById('id_name').value = '';
+    document.getElementById('id_time').value = '';
+    document.getElementById('id_file_problem').value = '';
+    document.getElementById('id_description').value = '';
+    document.getElementById('id_parametros_hpc').value = '';
+
+    document.getElementById('id_output_video_in').value = '';
+    document.getElementById('id_output_video_out').value = '';
+
+    document.getElementById('id_output_file_in').value = '';
+    document.getElementById('id_output_file_out').value = '';
+
+    
+
+
+  }
+  function radioButtonEvent(opt){
+    var mDIV;
+    document.getElementById('id_output').value = opt;
+    if (opt == 'file'){
+      
+      mDIV = document.getElementById('id_div_video');
+      mDIV.style.visibility = 'hidden';
+      mDIV = document.getElementById('id_div_file');
+      mDIV.style.visibility = 'visible';
+      return;
+    }
+    if (opt == 'video'){
+      
+      mDIV = document.getElementById('id_div_video');
+      mDIV.style.visibility = 'visible';
+      mDIV = document.getElementById('id_div_file');
+      mDIV.style.visibility = 'hidden';
+      return;
+    }
+  }
+
+  function isNumberKey(evt){
+          var charCode = (evt.which) ? evt.which : evt.keyCode;
+          if ( ((charCode >= 48) && (charCode <= 57)) || (charCode == 46))
+              return true;
+          return false;
+      }
+  </script>
   <body >
     <div>
       <h1 align="center"> <?php echo $eventTitle1; ?> </h1>
@@ -35,28 +86,90 @@
            <h1 align="center"> Adicionar problema </h1>
            <br>
            <form action="saveproblem.php"  method="post">
-             <label >ID: xx</label>
-             <label >Problema:</label><input type="text" id="id_name" name="id_name" value="" maxlength = "32">
-             <br>
-             <label >Arquivo fonte: </label>   <input type="file"  accept=".tar.gz" name="id_file_problem" id="id_file_problem">
-             <br>
+            <input type="hidden" id="id_id" name="id_id" value="-1">
+              <table style="width: 100%" border="0" align="center">
+                  <colgroup>
+                      <col span="1" style="width: 20%;">
+                      <col span="1" style="width: 80%;">
+                  </colgroup>
+                  <tr>
+                      <td align = "right">Problema:</td> <td><input type="text" id="id_name" name="id_name" value="" maxlength = "20" size="20"> </td>
+                  </tr>
+                  <tr>
+                      <td align = "right">Tempo:</td> <td><input type="text" id="id_time" name="id_time" value="" maxlength = "20" size="12" onkeypress="return isNumberKey(event);" > </td>
+                  </tr>
+                  <tr>
+                      <td align = "right" >Arquivo:</td> <td> <input type="file"  accept=".tar.gz" name="id_file_problem" id="id_file_problem"> </td>
+                  </tr>
+              </table>
              <label >Descrição: </label>
              <br>
-             <textarea id="id_description" rows = "5"  cols = "82"  maxlength = "256"  name = "id_description"  style="resize: none;"></textarea><br>
+             <textarea id="id_description" rows = "10"  cols = "82"  maxlength = "256"  name = "c"  style="resize: none;"></textarea><br>
              <br>
-             <label >Parâmetros: </label><br>
-             <textarea id="id_description" rows = "5"  cols = "82"  maxlength = "256"  name = "id_description"  style="resize: none;"></textarea><br>
-             <br>
-             <label >Gabarito: </label><br>
-             <input type="checkbox" id="id_stdout" name="id_stdout" value="Saída padrão"><br>
-             <input type="checkbox" id="id_fileout" name="id_fileout" value="Arquivo">
-             <textarea id="id_description" rows = "5"  cols = "82"  maxlength = "256"  name = "id_description"  style="resize: none;"></textarea><br>
+              <table style="width: 100%" border="0" align="center">
+                  <tr>
+                      <td align = "right" >Parâmetros HPC:</td> <td><input type="text" id="id_parametros_hpc" name="id_parametros_hpc" value="" maxlength = "20" size="20" > </td>
+                  </tr>
+              </table>
+              <table style="width: 50%" border="0" align="center"> 
+                  <tr>
+                      <td align = "left" > 
+                         <input type="radio" id="id_video" name="output" value="video" onclick="radioButtonEvent('video');" checked>
+                            <label for="video">Saípa para vídeo</label><br>
+                          <input type="radio" id="id_file" name="output" value="file" onclick="radioButtonEvent('file');">
+                            <label for="arquivo">Saída para arquivo</label><br> 
+                      </td> 
+                  </tr>
+              </table>
+              <div id='id_div_video'>
+                <table style="width: 100%" border="0" align="center"> 
+                    <tr>
+                          <td align = "right" > 
+                            Entrada:
+                          </td> 
+                          <td align = "left" > 
+                            <input type="text" id="id_output_video_in" name="id_output_video_in" value="" maxlength = "20" size="20">
+                          </td>
 
+                        <td align = "right" > 
+                          Saída:
+                        </td> 
+                        <td align = "left" > 
+                          <input type="text" id="id_output_video_out" name="id_output_video_out" value="" maxlength = "20" size="20">
+                        </td>
+                    </tr>
+                </table>
+              </div>
 
-              <br>
+              <div id='id_div_file' style ='visibility:hidden;'>
+                <table style="width: 100%" border="0" align="center"> 
+                    <tr>
+                          <td align = "right" > 
+                            Entrada:
+                          </td> 
+                          <td align = "left" > 
+                            <input type="text" id="id_output_file_in" name="id_output_file_in" value="" maxlength = "20" size="20">
+                          </td>
 
+                        <td align = "right" > 
+                          Arquivo:
+                        </td> 
+                        <td align = "left" > 
+                          <input type="file"  accept="*" name="id_output_file_out" id="id_output_file_out">
+                        </td>
+                    </tr>
+                </table>
+              </div>
+
+<!--                  <tr>
+                    <td align = "right" > Arquivo de saída: <td> <input type="file"  name="id_file_problem" id="id_file_problem"> </td>
+                    <td align = "right" >   MD5 do arquivo: <td> <input type="text" id="id_parametros_hpc" name="id_parametros_hpc" value="" maxlength = "32"></td>
+                    <td align = "right" >  Visível: <td> <input type="checkbox" id="id_stdout" name="id_stdout" value="Saída padrão"></td>
+                  </tr>
+-->
+             <input type="hidden" id="id_output" name="id_output" value="-1">
              <input id="id_submit" type="submit" value="Cadastrar">
-             <button id="id_clear" type="button" >Limpa</button>
+             <button id="id_clear" type="button" onclick="initState();" >Limpa</button>
 
            </form>
 
