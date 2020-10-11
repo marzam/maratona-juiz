@@ -26,6 +26,7 @@
       return;
   
     document.getElementById('id_output').value = '-1';
+    document.getElementById('id_visible').checked = false;
     
     document.getElementById('id_name').value = '';
     document.getElementById('id_time').value = '';
@@ -82,10 +83,10 @@
       <h3 align="center">Juiz: <strong><?php echo $name; ?></strong></h3>
       <h3 align="center"><?php echo $username; ?></h3>
 
-      <br>
+      <hr>
            <h1 align="center"> Adicionar problema </h1>
            <br>
-           <form action="saveproblem.php"  method="post">
+           <form action="saveproblem.php"  method="post" enctype="multipart/form-data">
             <input type="hidden" id="id_id" name="id_id" value="-1">
               <table style="width: 100%" border="0" align="center">
                   <colgroup>
@@ -104,7 +105,7 @@
               </table>
              <label >Descrição: </label>
              <br>
-             <textarea id="id_description" rows = "10"  cols = "82"  maxlength = "256"  name = "c"  style="resize: none;"></textarea><br>
+             <textarea id="id_description" rows = "10"  cols = "82"  maxlength = "256"  name = "id_description"  style="resize: none;"></textarea><br>
              <br>
               <table style="width: 100%" border="0" align="center">
                   <tr>
@@ -167,6 +168,7 @@
                     <td align = "right" >  Visível: <td> <input type="checkbox" id="id_stdout" name="id_stdout" value="Saída padrão"></td>
                   </tr>
 -->
+             <input type="checkbox" id="id_visible" name="id_visible" value="Yes"><label for="Visivel">Visível</label><br><br><hr>
              <input type="hidden" id="id_output" name="id_output" value="-1">
              <input id="id_submit" type="submit" value="Cadastrar">
              <button id="id_clear" type="button" onclick="initState();" >Limpa</button>
