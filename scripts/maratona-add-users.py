@@ -5,9 +5,10 @@ import MySQLdb as mysql
 import sys
 if __name__ == "__main__":
     print('Adicionando equipes')
+    print('Arquivo: [', sys.argv[1], ']')
     dbMaratona = mysql.connect(host="localhost",user="localuser", passwd="localuser",db="dbMaratona")
     cursor = dbMaratona.cursor()
-    dbase = pd.read_csv('records.csv', delimiter=";", encoding='utf-8')
+    dbase = pd.read_csv(sys.argv[1], delimiter=";", encoding='utf-8')
     for i in range(0, len(dbase)):
         r  = dbase.iloc[i]
         s_type = r['type']
@@ -25,8 +26,9 @@ if __name__ == "__main__":
                     sys.exit(-1)
         #m_facc = r['faccess']
         #sql = 'INSERT INTO login (name, username, password, type, email, actived) values ("{0:s}", "{1:s}", "{2:s}",  "{3:d}", "{4:s}","1");'.format(r['name'], r['username'],  r['email'],  i_type,  hashlib.md5(r['password']).hexdigest())
-        sql = 'INSERT INTO login (name, username, email , type, password, actived) values ("{0}", "{1}", "{2}",  "{3}", "{4}","1");'.format(r['name'], r['username'],  r['email'],  i_type,  hashlib.md5(r['password']).hexdigest())
-        
+        sql = 'INSERT INTO login (name, username, email , type, password, actived, fasscess) values ("{0}", "{1}", "{2}", "{3}", "{4}", "1","{5}");'.format(r['name'], r['username'],  r['email'],  i_type,  hashlib.md5(str(r['password']).encode('utf-8')).hexdigest(), r['faccess'])
+        #sql = 'INSERT INTO login (name, username, email , type, password, actived, fasscess) values ("{0}", "{1}", "{2}", "{3}", "{4}", "1","{5}");'.format(r['name'], r['username'],  r['email'],  i_type,  r['password'], r['faccess'])
+        #print(sql)
         cursor.execute(sql)
     
     result = cursor.fetchall()

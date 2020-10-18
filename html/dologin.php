@@ -1,9 +1,10 @@
 <?php
 //INSERT INTO login (name, password, score, type, username) values ('Marcelo', '12345', '0', '1', 'mzamith')
   include 'db.php';
-  $user   = $_POST['nameLogin'];
-  $passwd = $_POST['namePassed'];
+  $user   = $_POST['idLogin'];
+  $passwd = $_POST['idPasswd'];
   $sql = 'SELECT id,type, username, fasscess FROM login WHERE username = "' . $user . '" AND password = "' . md5($passwd) . '";';
+  echo $sql . '<br>';
   $result = execQuery($sql);
 
 
@@ -46,7 +47,7 @@
   }//end-if ($result->num_rows > 0) {
   else{
     //readfile("loginerror.html");
-    echo 'Usuário não cadastrado';
+    echo 'Usuário não cadastrado <br>';
     echo 'type: ' . $row['type'] . '<hr>' ;
   }
 

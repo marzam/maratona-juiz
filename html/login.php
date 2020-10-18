@@ -17,23 +17,23 @@
       <form method="post" action="dologin.php" >
         <table style="width: 90%" border="0" align="center">
             <tr>
-              <td>Login da equipe:</td>
+              <td>Username:</td>
             </tr>
             <tr>
-              <td><input id="idLogin" name="nameLogin" type="text"   style="width: 96%;" > </td>
+              <td><input id="idLogin" name="idLogin" type="text"   style="width: 96%;" > </td>
             </tr>
             <tr>
               <td>Senha:<br>
               </td>
             </tr>
             <tr>
-              <td><input id="idPasswd" name="namePassed" type="password" style="width: 96%;"> </td>
+              <td><input id="idPasswd" name="idPasswd" type="password" style="width: 96%;"> </td>
             </tr>
 
         </table>
         <p align="center"> <input value="Logar" type="submit"> </p>
-        <!-- <p align="center"> <a href="forgot.html">esqueceu sua senha ?</a> </p>
-        <p align="center"> <a href="register.php">novo usuário ?</a> </p> -->
+        <p align="center"> <a href="forgot.php">esqueceu sua senha ?</a> </p>
+        <!-- <p align="center"> <a href="register.php">novo usuário ?</a> </p> -->
       </form>
     </div>
   </body>
