@@ -6,6 +6,12 @@
     <title><?php echo $pageTitle; ?></title>
     <link rel="stylesheet" href="style.css" type="text/css">
   </head>
+  <script>
+  function forgot_password(){
+    document.getElementById("id_login").action = 'forgot.php';
+    document.getElementById('id_login').submit();
+  }
+  </script>
   <body>
     <div>
       <h1 align="center"> <?php echo $eventTitle1; ?> </h1>
@@ -14,7 +20,7 @@
 
     </div>
     <div class="loginborda" >
-      <form method="post" action="dologin.php" >
+      <form method="post" id="id_login" action="dologin.php" >
         <table style="width: 90%" border="0" align="center">
             <tr>
               <td>Username:</td>
@@ -32,7 +38,7 @@
 
         </table>
         <p align="center"> <input value="Logar" type="submit"> </p>
-        <p align="center"> <a href="forgot.php">esqueceu sua senha ?</a> </p>
+        <p align="center"> <a href="javascript:forgot_password()">esqueceu sua senha ?</a> </p>
         <!-- <p align="center"> <a href="register.php">novo usuário ?</a> </p> -->
       </form>
     </div>

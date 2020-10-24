@@ -45,11 +45,27 @@
       }//end-if($row = $result->fetch_assoc()) {
   
   }//end-if ($result->num_rows > 0) {
-  else{
-    //readfile("loginerror.html");
-    echo 'Usuário não cadastrado <br>';
-    echo 'type: ' . $row['type'] . '<hr>' ;
-  }
-
+ 
 
 ?>
+<?php  include 'vars.php'; ?>
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta http-equiv="content-type" content="text/html; charset=UTF-8">
+    <title><?php echo $pageTitle; ?></title>
+    <link rel="stylesheet" href="style.css" type="text/css">
+  </head>
+  <body>
+    <div>
+      <h1 align="center"> <?php echo $eventTitle1; ?> </h1>
+      <h1 align="center"> <?php echo $eventTitle2; ?> </h1>
+      <h2 align="center"> <?php echo $judgeTitle;  ?> </h2>
+
+    </div>
+      <hr>
+      <h3 align="center"> Login e/ou senha incorretos! </h3>
+      <hr>
+    
+  </body>
+</html>
