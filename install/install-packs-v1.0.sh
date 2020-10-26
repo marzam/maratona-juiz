@@ -5,6 +5,7 @@ if [[ $EUID -ne 0 ]]; then
 fi
 echo 'Instalando pacotes para o sistema da maratona'
 apt-get install build-essential gcc g++ rsync -y
+apt-get install python3-pip -y
 apt-get install git -y
 apt-get install python3-dev default-libmysqlclient-dev  -y
 apt-get install apache2 -y

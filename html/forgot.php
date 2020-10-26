@@ -25,7 +25,9 @@
     if ($result->num_rows > 0) {
         if($row = $result->fetch_assoc()) {
             $command = './main-email.py ' . $_POST['idLogin'] . ' ' . $row['email'] ;
-            exec($command);
+            
+            $response = shell_exec($command);
+            //echo $response;
             echo '<hr>';
             echo '<h3 align="center"> New password was sent to: ' . hideEmail($row['email']) . ' </h3>';
             echo '<hr>';

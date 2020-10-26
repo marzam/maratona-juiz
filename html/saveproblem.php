@@ -51,7 +51,7 @@
     }
 
     $sql = '';
-    if ($id == '-1'){   
+    if ($problem_id == '-1'){   
         $sql = 'INSERT INTO problem (name, description, time, visible, file, inputHPC, stdout, input, output) VALUES ';
         $sql .= '("' . $name . '", "' . $description . '", "' . $time . '", "' . $visible . '", "' . $file . '", "' . $input_hpc . '", "' . $stdout . '", "' . $input . '", "' . $output . '");';
     }else{
@@ -90,6 +90,7 @@
     echo '<script>';    
     echo '      window.open("mainjudge.php","_self");';
     echo '</script>';
+ 
 
 ?>
 </body >
