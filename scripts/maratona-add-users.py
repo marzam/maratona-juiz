@@ -58,7 +58,7 @@ if __name__ == "__main__":
         #sql = 'INSERT INTO login (name, username, email , type, password, actived, fasscess) values ("{0}", "{1}", "{2}", "{3}", "{4}", "1","{5}");'.format(r['name'], r['username'],  r['email'],  i_type,  r['password'], r['faccess'])
         #print(sql)
         cursor.execute(sql)
-        sendResetPassword(r['username'], r['email'], passwd)
+        sendResetPassword(r['username'], r['email'], userPasswd)
     result = cursor.fetchall()
     dbMaratona.commit()
     cursor.close()
