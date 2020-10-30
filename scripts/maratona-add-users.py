@@ -15,18 +15,7 @@ def sendResetPassword(username, to_email):
     userPasswd = getNewPassword()
     userPasswd_MD5 = hashlib.md5(str(userPasswd).encode('utf-8')).hexdigest()
     
-    #conect into db
-    dbMaratona = mysql.connect(host="localhost",user="localuser", passwd="localuser",db="dbMaratona")
-    cursor = dbMaratona.cursor()
-    sql = 'UPDATE login SET login.password = "{}", login.fasscess = "1" WHERE login.username = "{}" AND login.email = "{}";'.format(userPasswd_MD5, username, to_email)
-    result = cursor.execute(sql)
-    cursor.fetchall()
-    print('SQL: ', sql, ' return: ', result)
-    dbMaratona.commit()
-    cursor.close()
-    dbMaratona.close()
-
-    if result != 1 :
+        if result != 1 :
         print('ERROR in sql')
         sys.exit(-1)
         
