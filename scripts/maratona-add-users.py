@@ -15,7 +15,8 @@ def sendResetPassword(username, to_email):
     userPasswd = getNewPassword()
     userPasswd_MD5 = hashlib.md5(str(userPasswd).encode('utf-8')).hexdigest()
     
-        if result != 1 :
+    
+    if result != 1 :
         print('ERROR in sql')
         sys.exit(-1)
         
