@@ -12,10 +12,6 @@ def getNewPassword():
     return p
 
 def sendResetPassword(username, to_email, userPasswd):
-    
-    userPasswd_MD5 = hashlib.md5(str(userPasswd).encode('utf-8')).hexdigest()
-    
-    
         
     sender_email = "zamith.marcelo@yahoo.com"
     #password     = '102455PBC' 
@@ -56,8 +52,9 @@ if __name__ == "__main__":
                     sys.exit(-1)
         #m_facc = r['faccess']
         #sql = 'INSERT INTO login (name, username, password, type, email, actived) values ("{0:s}", "{1:s}", "{2:s}",  "{3:d}", "{4:s}","1");'.format(r['name'], r['username'],  r['email'],  i_type,  hashlib.md5(r['password']).hexdigest())
-        passwd = getNewPassword
-        sql = 'INSERT INTO login (name, username, email , type, password, actived, fasscess) values ("{0}", "{1}", "{2}", "{3}", "{4}", "1","{5}");'.format(r['name'], r['username'],  r['email'],  i_type,  hashlib.md5(str(passwd).encode('utf-8')).hexdigest(), r['faccess'])
+        userPasswd = getNewPassword()
+        userPasswd_MD5 = hashlib.md5(str(userPasswd).encode('utf-8')).hexdigest()
+        sql = 'INSERT INTO login (name, username, email , type, password, actived, fasscess) values ("{0}", "{1}", "{2}", "{3}", "{4}", "1","{5}");'.format(r['name'], r['username'],  r['email'],  i_type, userPasswd_MD5, r['faccess'])
         #sql = 'INSERT INTO login (name, username, email , type, password, actived, fasscess) values ("{0}", "{1}", "{2}", "{3}", "{4}", "1","{5}");'.format(r['name'], r['username'],  r['email'],  i_type,  r['password'], r['faccess'])
         #print(sql)
         cursor.execute(sql)
