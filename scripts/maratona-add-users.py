@@ -57,11 +57,11 @@ if __name__ == "__main__":
         #m_facc = r['faccess']
         #sql = 'INSERT INTO login (name, username, password, type, email, actived) values ("{0:s}", "{1:s}", "{2:s}",  "{3:d}", "{4:s}","1");'.format(r['name'], r['username'],  r['email'],  i_type,  hashlib.md5(r['password']).hexdigest())
         passwd = getNewPassword
-        sql = 'INSERT INTO login (name, username, email , type, password, actived, fasscess) values ("{0}", "{1}", "{2}", "{3}", "{4}", "1","{5}");'.format(r['name'], r['username'],  r['email'],  i_type,  hashlib.md5(passwd.encode('utf-8')).hexdigest(), r['faccess'])
+        sql = 'INSERT INTO login (name, username, email , type, password, actived, fasscess) values ("{0}", "{1}", "{2}", "{3}", "{4}", "1","{5}");'.format(r['name'], r['username'],  r['email'],  i_type,  hashlib.md5(str(passwd).encode('utf-8')).hexdigest(), r['faccess'])
         #sql = 'INSERT INTO login (name, username, email , type, password, actived, fasscess) values ("{0}", "{1}", "{2}", "{3}", "{4}", "1","{5}");'.format(r['name'], r['username'],  r['email'],  i_type,  r['password'], r['faccess'])
         #print(sql)
         cursor.execute(sql)
-        sendResetPassword(r['username'], r['email'])
+        sendResetPassword(r['username'], r['email'], passwd)
     result = cursor.fetchall()
     dbMaratona.commit()
     cursor.close()
