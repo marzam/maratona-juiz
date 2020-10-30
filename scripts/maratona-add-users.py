@@ -20,7 +20,7 @@ def sendResetPassword(username, to_email):
     sender_email = "zamith.marcelo@yahoo.com"
     #password     = '102455PBC' 
     app_password = 'lrhlkkzkqpictzxe'
-    msg = 'Subject: cadastro no sistema da maratona da ERAD-RJ\nTo: {}\nFrom: {}\nCadastro realizado com sucesso\nLink: https://www.dcc.ufrrj.br/maratona/login.php \nLogin: {}\nSenha: {}\n'.format(to_email, sender_email, username, userPasswd)
+    msg = 'Subject: cadastro no sistema da maratona da ERAD-RJ\nTo: {}\nFrom: {}\n\nCadastro realizado com sucesso\nLink: https://www.dcc.ufrrj.br/maratona/login.php \nLogin: {}\nSenha: {}\n'.format(to_email, sender_email, username, userPasswd)
 
     smtpObj = smtplib.SMTP('smtp.mail.yahoo.com', 587)
     
