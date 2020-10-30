@@ -4,7 +4,7 @@
   $user   = $_POST['idLogin'];
   $passwd = $_POST['idPasswd'];
   $sql = 'SELECT id,type, username, fasscess FROM login WHERE username = "' . $user . '" AND password = "' . md5($passwd) . '";';
-  echo $sql . '<br>';
+  //echo $sql . '<br>';
   $result = execQuery($sql);
 
 
