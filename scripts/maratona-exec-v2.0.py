@@ -330,8 +330,7 @@ def main():
         # delay before getting new job
         sleep(5)
         print('Next')
-        sys.exit(0)
-
+        
 
 
 

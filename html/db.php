@@ -25,12 +25,37 @@ function execQuery($mysql){
 }
 
 function simpleScoreTable(){
+  $sql = 'SELECT  count(*) as problems FROM problem;';
+  $result   = execQuery($sql);
+  $nProblems = 0;
+  if ($result->num_rows > 0) {
+    if($row = $result->fetch_assoc()) {
+      $nProblems = $row['problems'];
+
+    }//end-if($row = $result->fetch_assoc()) {
+
+  }//end-if ($result->num_rows > 0) {
+
+/*    
+  $sql = 'select count(*) as solved from (SELECT MAX(submission.score) as score, problem_id, user_id FROM submission GROUP BY submission.user_id, submission.problem_id) as aux;';
+  $result   = execQuery($sql);
+  $sProblems = 0;
+  if ($result->num_rows > 0) {
+    if($row = $result->fetch_assoc()) {
+      $sProblems = $row['solved'];
+
+    }//end-if($row = $result->fetch_assoc()) {
+
+  }//end-if ($result->num_rows > 0) {
+*/
+
   echo '<h1 align="center"> Pontuação </h1>';
   echo '<table border="0" style="width:100%;">';
     echo '<colgroup>';
        echo '<col style="width:80%;">';
        echo '<col style="width:20%;">';
     echo '</colgroup>';
+      echo '<tr bgcolor="#afafaf"> <th> equipe </th><th> problemas </th><th>  pontuação </th> </tr>';
       $index = 1;
       //$sql = 'SELECT SUM(speedup) as speedup, login.name as team FROM (SELECT MAX(score.speedup) as speedup, problem_id, user_id from score GROUP BY score.user_id, score.problem_id) AS temp INNER JOIN login ON login.id = temp.user_id GROUP BY user_id ORDER BY speedup DESC;';
       $sql = 'SELECT SUM(score) as score, login.username as team FROM (SELECT MAX(submission.score) as score, problem_id, user_id FROM submission GROUP BY submission.user_id, submission.problem_id) AS temp INNER JOIN login ON login.id = temp.user_id GROUP BY user_id ORDER BY score DESC;';
@@ -41,7 +66,7 @@ function simpleScoreTable(){
           if (($index % 2) == 0)
            $bgColor = '#d0d0d0';
 
-          echo '<tr bgcolor="'. $bgColor .'" > <th  align="left">' . $row['team'] .  '</a> </th> <th align="right"> ' . ($row['score'] - 1) . ' </th>  </tr>';
+          echo '<tr bgcolor="'. $bgColor .'" > <th  align="left">' . $row['team'] .  '</a> </th><th align="right"> '. $nProblems .'  </th> <th align="right"> ' .  number_format(($row['score'] - 1) , 5, '.', ',') . ' </th>  </tr>';
           $index++;
 
         }//end-if($row = $result->fetch_assoc()) {
