@@ -9,6 +9,7 @@ import json
 import getpass
 import sys
 import subprocess
+import gc
 from optparse import OptionParser
 from time import sleep
 from subprocess import PIPE, Popen
@@ -309,27 +310,26 @@ def main():
     (opt, args) = parser.parse_args()
 
     # start session
-    opt.session = requests.Session()
+    
 
     # authenticate in the server
 
     #initialize(opt)
     # verify new jobs in loop
-    while True:
+    #while True:
+    print('Running...')
+    opt.session = requests.Session()
+    response = opt.session.get(opt.url + 'getjob.php',  timeout=30)
 
-        response = opt.session.get(opt.url + 'getjob.php')
 
+    if response.ok and response.text != "":
+        job = json.loads(response.text)
+        if (opt.verbose): print("new_job: ", job)
 
-        if response.ok and response.text != "":
-            job = json.loads(response.text)
-            if (opt.verbose): print("new_job: ", job)
+        # execute job
+        exec_job(opt, job)
 
-            # execute job
-            exec_job(opt, job)
-
-        # delay before getting new job
-        sleep(5)
-        print('Next')
+    # delay before getting new job
         
 
 

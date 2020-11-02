@@ -28,7 +28,7 @@
   #$result = execQuery($sql);
 
   # release table
-  #$sql = "UNLOCK TABLES";
-  #$result = execQuery($sql);
+  $sql = "UNLOCK TABLES";
+  $result = execQuery($sql);
 
 ?>
