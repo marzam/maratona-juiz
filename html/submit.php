@@ -55,6 +55,15 @@
              ?>
             </select>
             <br><br>
+            <!--
+            <label for="problem" style="font-weight:bold">Selecione a arquitetura:</label>
+              <select name="cmbarchitecture" id="id_cmbarchitecture">
+              <option value="C" selected>CPU - OpenMP/pThread</option> 
+              <option value="C">GPU - CUDA</option> 
+              
+            </select>
+            <br><br>
+            -->
             <label for="problem" style="font-weight:bold">Selecione o arquivo: </label>
             <input type="file"  accept=".tar.gz" name="fileToUpload" id="fileToUpload">
             <br><br>
@@ -68,13 +77,14 @@
            if ($result->num_rows > 0) {
              echo '<h1 align="center"> Submissões realizadas </h1>';
              echo '<table border="0" style="width:100%;">';
+             echo '<tr bgcolor="#afafaf"> <th> ID </th><th> data/hora </th><th> problema </th> <th> resposta </th> <th> pontuação </th> </tr>';
              $index = 1;
              while($row = $result->fetch_assoc()) {
                  $bgColor = '#dfdfdf';
                  if (($index % 2) == 0)
                    $bgColor = '#d0d0d0';
                $phpdate = strtotime( $row['moment'] );
-               echo '<tr bgcolor="'. $bgColor .'" > <th>' . $row['id'] .  '</th><th> ' . date( 'd/m/Y H:i:s', $phpdate ) . ' </th><th> ' . $row['name'] . ' </th> <th> ' . $row['answer'] . ' </th> <th> ' . number_format($row['score'] , 5, '.', ','). ' </th> </tr>';
+               echo '<tr bgcolor="'. $bgColor .'" > <th>' . $row['id'] .  '</th><th> ' . date( 'd/m/Y H:i:s', $phpdate ) . ' </th><th> ' . $row['name'] . ' </th> <th> ' . $row['answer'] . ' </th> <th> ' . number_format(($row['score'] - 1) , 5, '.', ','). ' </th> </tr>';
                $index++;
              }//end-if($row = $result->fetch_assoc()) {
 

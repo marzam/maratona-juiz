@@ -5,6 +5,7 @@
   $zeros    = '00000000000';
   $user_id  = $_COOKIE['login-team'];
   $prob_id  = $_POST['cmbProblem'];
+  //$arch     =  $_POST['cmbarchitecture'];
   $username = 'desconhecido';
   $name     = 'desconhecido';
 

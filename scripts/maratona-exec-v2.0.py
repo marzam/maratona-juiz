@@ -1,4 +1,5 @@
 #!/home/mzamith/Apps/anaconda3/bin/python
+import difflib
 import requests
 import os
 import timeit
@@ -12,17 +13,17 @@ from optparse import OptionParser
 from time import sleep
 from subprocess import PIPE, Popen
 
-# python3 ./maratona-execd.py  -u http://192.168.1.21/ -v -n node01 -p 12345
+# python3 ./maratona-execd.py  -u http://192.168.1.21/ -v -n node01 -p node01
 # -p <senha>
 
 # authenticate in the server
 def initialize(opt):
-    
+
     if opt.pw == None:
-        try: 
+        try:
             opt.pw = getpass.getpass(prompt='Senha do usuário {}:'.format(opt.name))
-        except Exception as error: 
-            print('ERROR', error) 
+        except Exception as error:
+            print('ERROR', error)
 
     # update problem time in server
     data = {'nameLogin': opt.name,
@@ -88,19 +89,20 @@ def exec(binfile, srcpath, param, mtimeout):
 
     os.chdir(cur_path)
     elapsedtime = b - a
-
+    a_stdout = ''
     print('Executed file:', pprocess.pid, ' elapsedtime: ', elapsedtime, ' in seconds')
     if len(stdout) > 0:
         str_stdout = '\t\t' + stdout.decode('utf-8').replace('\n', '\n\t\t')
         print('\tOUT:')
         print(str_stdout)
+        a_stdout = stdout.decode('utf-8').replace('\n', '')
 
     if len(stderr) > 0:
         str_sterr = '\t\t' + stderr.decode('utf-8').replace('\n', '\n\t\t')
         print('\tERR:')
         print(str_sterr)
 
-    return elapsedtime
+    return elapsedtime, a_stdout
 
 # Compile project in according to created makefile file
 def compile_make(path, clean = False):
@@ -139,6 +141,34 @@ def compile_make(path, clean = False):
 
     return binfile, answer
 
+def equal_bin (file1, file2):
+    cmd = 'diff {} {}'.format(file1, file2)
+    pprocess = Popen(cmd, shell=True, stdout=PIPE, stderr=PIPE)
+    stdout = b''
+    stderr = b''
+
+    try:
+        stdout, stderr = pprocess.communicate()
+        output = stdout.decode('utf-8') 
+    except subprocess.TimeoutExpired:
+        Popen.kill(pprocess)
+        stderr = b'wrong answer'
+        output =  stderr.decode('utf-8') 
+
+    return output
+
+def equal (file1, file2):
+    count = 0
+    text1 = open(file1).readlines()
+    text2 = open(file2).readlines()
+
+    for line in difflib.unified_diff(text1, text2):
+        count = count + 1
+
+    if count == 0:
+        return ''
+    else:
+        return 'wrong answer'
 # execute job
 def exec_job(opt, job):
 
@@ -151,10 +181,10 @@ def exec_job(opt, job):
     tmpdir = os.path.join(pwd, 'tmp')
 
     # compile and exec original problem if needed
-    # re-write due to I change database attibute name
+    '''
     if float(job['time']) < 0:
-        
-        response = opt.session.get(opt.url + job['path'])
+
+        response = opt.session.get(opt.url + job['file_prob'])
         srczip = os.path.join(tmpdir, 'source.tar.gz')
         with open(srczip, "wb") as f:
             f.write(response.content)
@@ -165,7 +195,7 @@ def exec_job(opt, job):
         binfile, anwser = compile_make(srcpath)
 
         # execute
-        probtime = exec(binfile, srcpath, job['param'], -1)
+        probtime, answer = exec(binfile, srcpath, job['param'], -1)
         # clean tmp folder
         os.remove(srczip)
         shutil.rmtree(srcpath)
@@ -176,21 +206,22 @@ def exec_job(opt, job):
         if (opt.verbose): print(response.text)
 
     else:
-        probtime = float(job['time'])
-        if (opt.verbose): print('Sequencial time: ', probtime)
+        '''
+    
+    probtime = float(job['time'])
+    if (opt.verbose): print('Sequencial time:', probtime)
 
     # compile and exec submission
     response = opt.session.get(opt.url + job['file'])
     srczip = os.path.join(tmpdir, 'source.tar.gz')
+
     with open(srczip, "wb") as f:
         f.write(response.content)
 
 
     shutil.unpack_archive(srczip, tmpdir)
 
-    
     # find src file
-    if (opt.verbose): print('Unpacking')
     srcpath, answer = find_mkfile(tmpdir)
     if answer != '':
         data = {'id': job['id'], 'nameLogin': opt.name, 'namePassed': opt.pw, 'answer': answer}
@@ -199,7 +230,6 @@ def exec_job(opt, job):
         if (opt.verbose): print(response.text)
         return
 
-    if (opt.verbose): print('Compiling')
     binfile, answer = compile_make(srcpath)
     if answer != '':
         data = {'id': job['id'], 'nameLogin': opt.name, 'namePassed': opt.pw, 'answer': answer}
@@ -208,9 +238,43 @@ def exec_job(opt, job):
         return
 
 
+    #check if the answer is equal to template
+    auxtime, output_created = exec(binfile, srcpath, job['input'], probtime)
+
+    
+    answer = ''
+    if job['stdout'].find('file') >= 0:
+        file_template =  job['output']
+        files = glob.glob(srcpath + '/*')
+        file_created = max(files, key=os.path.getctime)
+
+        #Download template answer        
+        response = opt.session.get(opt.url + job['output'])
+        srcfile = os.path.join(tmpdir, 'template.bin')
+        with open(srcfile, "wb") as f:
+            f.write(response.content)
+
+        answer = equal_bin('template.bin', file_created)
+        
+    elif job['stdout'].find('stdout:') >= 0 :
+        output_template = job['stdout'][7:]
+        if output_template != output_created:
+            answer = 'wrong answer'
+
+    
+    if answer != '':
+        data = {'id': job['id'], 'nameLogin': opt.name, 'namePassed': opt.pw, 'answer': answer}
+        if (opt.verbose): print(data)
+        response = opt.session.post(url=opt.url + 'setsubtime.php', data=data)
+        if (opt.verbose): print(response.text)
+        if (opt.verbose): print('Answer is wrong or error')
+        return
+    else:
+        if (opt.verbose): print('Answer is correct')
+
 
     # execute
-    subtime = exec(binfile, srcpath, job['param'], probtime)
+    subtime, auxanswer = exec(binfile, srcpath, job['inputHPC'], probtime)
 
     os.remove(srczip)
     shutil.rmtree(srcpath)
@@ -228,9 +292,9 @@ def exec_job(opt, job):
     response = opt.session.post(url = opt.url+'setsubtime.php', data = data)
     if (opt.verbose):print(response.text)
 
-   # os.rmdir('tmp')
+    #os.rmdir('tmp')
 
-   
+
 
 # main function
 def main():
@@ -246,29 +310,30 @@ def main():
 
     # start session
     opt.session = requests.Session()
-    
+
     # authenticate in the server
-  
+
     #initialize(opt)
     # verify new jobs in loop
     while True:
 
         response = opt.session.get(opt.url + 'getjob.php')
+
+
         if response.ok and response.text != "":
             job = json.loads(response.text)
             if (opt.verbose): print("new_job: ", job)
-            
+
             # execute job
             exec_job(opt, job)
 
         # delay before getting new job
-        #sleep(5)
-        #print('Next')
+        sleep(5)
+        print('Next')
         sys.exit(0)
-        
 
-   
+
+
 
 if __name__ == "__main__":
     main()
-
