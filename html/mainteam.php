@@ -1,20 +1,15 @@
 <?php
   include 'vars.php';
   include 'db.php';
-
-  $id       = $_COOKIE['login-team'];
-  $username = 'desconhecido';
-  $name     = 'desconhecido';
-  $sql      = 'SELECT username, name FROM login WHERE id = "' . $id . '"; ';
-
-
-  $result   = execQuery($sql);
+  $result   =checkLoginTeam();
+  //$result   = execQuery($sql);
 
 
   if ($result->num_rows > 0) {
       if($row = $result->fetch_assoc()) {
         $username = $row['username'];
         $name     = $row['name'];
+        $team     = $row['team'];
       }//end-if($row = $result->fetch_assoc()) {
   }//end-if ($result->num_rows > 0) {
 ?>
@@ -44,8 +39,8 @@
     </div>
     <hr>
     <div class="loginborda">
-      <h3 align="center">Equibe: <strong><?php echo $name; ?></strong></h3>
-      <h3 align="center"><?php echo '<a href="update.php">' . $username . '</a>';  ?></h3>
+      <h3 align="center">Equibe: <strong><?php echo $team; ?></strong></h3>
+      <h3 align="center">Username:<?php echo '<a href="update.php">' . $username . '</a>';  ?></h3>
       <ul>
         <li><a href="problems.php"> Problemas </a></li>
         <li><a href="submit.php"> Submissão </a></li>

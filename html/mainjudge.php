@@ -1,12 +1,14 @@
 <?php
   include 'vars.php';
   include 'db.php';
-
+/*
   $id       = $_COOKIE['login-judge'];
   $username = 'desconhecido';
   $name     = 'desconhecido';
-  $sql      = 'SELECT username, name FROM login WHERE id = "' . $id . '"; ';
-
+  $team     = '';
+  //$sql      = 'SELECT username, name FROM login WHERE id = "' . $id . '"; ';
+  
+  $sql = 'select t1.name as team, t2.id as id, t2.username as username, t2.name as name FROM login as t2 inner join teams as t1 on t2.team_id = t1.id where t2.id="' . $id . '"; ';
 
   $result   = execQuery($sql);
 
@@ -15,8 +17,21 @@
       if($row = $result->fetch_assoc()) {
         $username = $row['username'];
         $name     = $row['name'];
+        $team     = $row['team'];
       }//end-if($row = $result->fetch_assoc()) {
   }//end-if ($result->num_rows > 0) {
+    */
+    $result   =checkLoginJudge();
+    //$result   = execQuery($sql);
+
+
+    if ($result->num_rows > 0) {
+        if($row = $result->fetch_assoc()) {
+          $username = $row['username'];
+          $name     = $row['name'];
+          $team     = $row['team'];
+        }//end-if($row = $result->fetch_assoc()) {
+    }//end-if ($result->num_rows > 0) {
 ?>
 <!DOCTYPE html>
 <html>
@@ -44,8 +59,9 @@
     </div>
     <hr>
     <div class="loginborda">
-      <h3 align="center">Juiz adm.: <strong><?php echo $name; ?></strong></h3>
-      <h3 align="center"><?php echo $username; ?></h3>
+      <h3 align="center">Equipe: <strong><?php echo $team; ?></strong></h3>
+      <h3 align="center">Usuário: <?php echo $username; ?></h3>
+      
       <ul>
         <li><a href="addproblem.php"> Cadastrar problema </a></li>
         <li><a href="listproblems.php"> Listar problemas </a></li>

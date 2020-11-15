@@ -2,19 +2,16 @@
   include 'vars.php';
   include 'db.php';
 
-  $id       = $_COOKIE['login-team'];
-  $username = 'desconhecido';
-  $name     = 'desconhecido';
-  $sql      = 'SELECT username, name FROM login WHERE id = "' . $id . '"; ';
-
-
-  $result   = execQuery($sql);
+  $result   =checkLoginTeam();
+  //$result   = execQuery($sql);
 
 
   if ($result->num_rows > 0) {
       if($row = $result->fetch_assoc()) {
         $username = $row['username'];
         $name     = $row['name'];
+        $team     = $row['team'];
+        $id       = $_COOKIE['login-team'];
       }//end-if($row = $result->fetch_assoc()) {
   }//end-if ($result->num_rows > 0) {
 ?>
@@ -34,8 +31,8 @@
 
     <div style="border: 2px solid #dadada; background-color: #dadada; height: 100px; width: 600px; border-radius: 8px; margin-left: auto; margin-right: auto;">
       <a align="left" href="javascript:history.back()"> Voltar </a>
-      <h3 align="center">Equibe: <strong><?php echo $name; ?></strong></h3>
-      <h3 align="center"><?php echo $username; ?></h3>
+      <h3 align="center">Equibe: <strong><?php echo $team; ?></strong></h3>
+      <h3 align="center">Username:<?php echo $username ;  ?></h3>
 
       <br>
            <h1 align="center"> Submissão: </h1>
