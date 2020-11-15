@@ -57,7 +57,7 @@
               data.setAttribute('answer', recAnswer);
               data.setAttribute('elapsedtime', recElapsedtime);
               record.appendChild(data);
-              //alert('Registro: ' + recID + '\n' + recAnswer + '\n' + recElapsedtime);
+              alert('Registro: ' + recID + '\n' + recAnswer + '\n' + recElapsedtime);
               //alert('Atualizado em:' + i.toString());
             }//end-if (opt == '1'){
               
@@ -66,7 +66,9 @@
           if (flag == 1){
               var xmlHttp = new XMLHttpRequest();
               //          xmlHttp.open("POST", "http://192.168.1.21/toupdatesubmmity.php", true); // true for asynchronous
+              alert("fim");
               xmlHttp.open("POST", "toupdatesubmmity.php", true); // true for asynchronous
+              
               xmlHttp.setRequestHeader('Content-type', 'application/xml; charset=utf-8');
               var myXML = new XMLSerializer();
               var msg = myXML.serializeToString(doc);
@@ -76,7 +78,7 @@
             alert('Não existe registros para serem atualizados!');
           }
           
-          //alert("fim");
+          
 
           
       }
@@ -122,11 +124,12 @@
                    $bgColor = '#d0d0d0';
                $phpdate = strtotime( $row['moment'] );
 //               echo '<tr bgcolor="'. $bgColor .'" > <th>' . $row['id'] .  '</th><th> ' .  $row['username'] . '</th><th> ' . date( 'd/m/Y H:i:s', $phpdate ) . ' </th><th> ' . $row['name'] . ' </th> <th> ' . $row['answer'] . ' </th> <th> ' . number_format($row['score'] , 5, '.', ','). ' </th> </tr>';
-               echo '<tr bgcolor="'. $bgColor .'" > <th>' . $row['id'] .  '</th><th> ' .  $row['username'] . '</th><th> ' . date( 'd/m/Y H:i:s', $phpdate ) . ' </th><th> ' . $row['name'] . ' </th> <th> ';
+//               echo '<tr bgcolor="'. $bgColor .'" > <th>' . $row['id'] .  '</th><th> ' .  $row['username'] . '</th><th> ' . date( 'd/m/Y H:i:s', $phpdate ) . ' </th><th> ' . $row['name'] . ' </th> <th> ';
+                echo '<tr bgcolor="'. $bgColor .'" > <th><a href="' . $row['file'] . '">' . $row['id'] .  '</a> </th><th> ' .  $row['username'] . '</th><th> ' . date( 'd/m/Y H:i:s', $phpdate ) . ' </th><th> ' . $row['name'] . ' </th> <th> ';
 //               echo $row['answer'] ;
-               $answers = array( 'accepted' , 'wrong answer', 'runtime error', 'compilation error', 'pending');
+               $answers = array( 'accepted' , 'wrong answer', 'runtime error', 'compilation error', 'pending', 'submitted file corrupted');
                echo '<select id="id_answser_' . ($index-1) . '" onchange="setSelect(' . ($index-1) . ')">>';
-               for ($i = 0; $i < 5; $i++){
+               for ($i = 0; $i < 6; $i++){
                   $selected = '';
                   if ( $answers[$i] == $row['answer'] )
                     $selected = 'selected ';

@@ -11,4 +11,5 @@ apt-get install python3-dev default-libmysqlclient-dev  -y
 apt-get install apache2 -y
 apt-get install mysql-server -y
 apt-get install php libapache2-mod-php php-mysql -y
+apt-get install php-xml
 mysql_secure_installation
