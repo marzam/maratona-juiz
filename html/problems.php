@@ -41,7 +41,7 @@
              </colgroup>
 
              <?php
-               $sql = 'SELECT * FROM problem ORDER BY name;';
+               $sql = 'SELECT * FROM problem WHERE visible=1 ORDER BY name;';
                $result   = execQuery($sql);
                if ($result->num_rows > 0) {
                  while($row = $result->fetch_assoc()) {

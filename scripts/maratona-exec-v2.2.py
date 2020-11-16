@@ -1,6 +1,7 @@
 #!/home/mzamith/Apps/anaconda3/bin/python
 # Este fonte resolve o problema do arquivo corrompido compactado
 # Resolve o problema da messagem de erro de compilação e dos warmings
+# Utilia a o conceito de diretório de trabalho, onde vai usar os arquivos de entrada e de gabarito
 import difflib
 import requests
 import os
@@ -69,7 +70,7 @@ def exec(binfile, srcpath, param, mtimeout):
     print("    Script PID:", os.getpid())
     print('Executing file:', pprocess.pid)
     print('    Timeout is: ', mtimeout, ' second(s)')
-
+    print('     Executing: ', str)
     stdout = b''
     stderr = b''
     a = 0
@@ -294,7 +295,6 @@ def exec_job(opt, job):
 
     # execute
     subtime, auxanswer = exec(binfile, srcpath, job['inputHPC'], probtime)
-
     os.remove(srczip)
     shutil.rmtree(srcpath)
 
@@ -304,7 +304,6 @@ def exec_job(opt, job):
         if (opt.verbose): print(response.text)
         return
 
-    # clean tmp folder
 
     # update problem time in server
     data = {'id': job['id'], 'prob_id': job['problem_id'], 'time': subtime, 'nameLogin': opt.name, 'namePassed': opt.pw, 'answer': 'accepted', 'info': ''}
@@ -325,6 +324,7 @@ def main():
     parser.add_option("-p", "--password", type="string", dest="pw", default=None, help="senha para login no sistema de juiz da maratona")
     parser.add_option("--compiler-path", type="string", default="/usr/bin/gcc", dest="compiler", help="caminho para o compilador")
     parser.add_option("-v", "--verbose", action="store_true", dest="verbose", default=False, help="imprimir mensagens de debug")
+    #parser.add_option("-w", "--work-dir", type="string", default="/opt/online-judge/", help="caminho onde estão os exemplos")
     (opt, args) = parser.parse_args()
 
     # start session

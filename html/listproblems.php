@@ -117,6 +117,7 @@
                 if ($result->num_rows > 0) {
                     echo '<h1 align="center"> Problemas cadastrados </h1>';
                     echo '<table border="0" style="width:100%;">';
+                    echo '<tr  bgcolor="#afafaf"> <th>ID</th> <th>Nome</th> <th>Tempo (s)</th> <th>Visível</th> <th>Saída</th></tr>';
                     $index = 1;
                     while($row = $result->fetch_assoc()) {
                         $bgColor = '#dfdfdf';
@@ -124,7 +125,7 @@
                         $bgColor = '#d0d0d0';
 
         // <a align="left" href="javascript:history.back()"> Voltar </a>
-                    echo '<tr bgcolor="'. $bgColor .'" > <th>' . $row['id'] .  '</th><th>  <a href="javascript:mySubmit(' . $row['id'] .  ')">' .  $row['name'] . '</a></th><th> ' . $row['time'] . ' </th><th> ' . $row['visible'] . ' </th><th> ' . $row['stdout'] . ' </th>';
+                    echo '<tr bgcolor="'. $bgColor .'" > <th>' . $row['id'] .  '</th><th>  <a href="javascript:mySubmit(' . $row['id'] .  ')">' .  $row['name'] . '</a></th><th> ' .  number_format($row['time'] , 5, '.', ',') . ' </th><th> ' . $row['visible'] . ' </th><th> ' . $row['stdout'] . ' </th>';
 
         //               echo '<tr bgcolor="'. $bgColor .'" > <th>' . $row['id'] .  '</th><th>  <a href="#" onclick="document.getElementById('myForm').submit();">Submit</a>' .  $row['name'] . '</th><th> ' . $row['time'] . ' </th><th> ' . $row['visible'] . ' </th><th> ' . $row['stdout'] . ' </th>';
 
