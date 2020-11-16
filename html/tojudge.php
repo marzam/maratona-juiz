@@ -2,7 +2,7 @@
   include 'vars.php';
   include 'db.php';
 
-  $result   =checkLoginJudge();
+  $result   = checkLoginJudge();
   //$result   = execQuery($sql);
 
 
@@ -21,6 +21,17 @@
     <title><?php echo $pageTitle; ?></title>
     <link rel="stylesheet" href="style.css" type="text/css">
     <script type="text/javascript">
+      function readBody(xhr) {
+        var data;
+        if (!xhr.responseType || xhr.responseType === "text") {
+            data = xhr.responseText;
+        } else if (xhr.responseType === "document") {
+            data = xhr.responseXML;
+        } else {
+            data = xhr.response;
+        }
+        return data;
+      }
       function setSelect(index){
           //document.getElementById("myText").select();
          var idelement = 'id_updated_' + index.toString();
@@ -49,11 +60,13 @@
               recID           = document.getElementById('id_submissionID_' +  i.toString()).value;
               recAnswer       = document.getElementById('id_answser_' +  i.toString()).value;
               recElapsedtime  = document.getElementById('id_elapsedtime_' +  i.toString()).value;
+              recInfo  = document.getElementById('id_info_' +  i.toString()).value;
               data.setAttribute('id', recID);
               data.setAttribute('answer', recAnswer);
               data.setAttribute('elapsedtime', recElapsedtime);
+              data.setAttribute('info', recInfo);
               record.appendChild(data);
-              alert('Registro: ' + recID + '\n' + recAnswer + '\n' + recElapsedtime);
+              //alert('Registro: ' + recID + '\n' + recAnswer + '\n' + recElapsedtime);
               //alert('Atualizado em:' + i.toString());
             }//end-if (opt == '1'){
               
@@ -62,14 +75,21 @@
           if (flag == 1){
               var xmlHttp = new XMLHttpRequest();
               //          xmlHttp.open("POST", "http://192.168.1.21/toupdatesubmmity.php", true); // true for asynchronous
-              alert("fim");
+             // alert("fim");
+             xmlHttp.onreadystatechange = function() {
+                if (xhr.readyState == 4) {
+                  console.log(readBody(xmlHttp));
+                }
+              }
               xmlHttp.open("POST", "toupdatesubmmity.php", true); // true for asynchronous
               
               xmlHttp.setRequestHeader('Content-type', 'application/xml; charset=utf-8');
               var myXML = new XMLSerializer();
               var msg = myXML.serializeToString(doc);
-              xmlHttp.send(msg);
-              window.history.back();
+              //alert(msg);
+              var ret = xmlHttp.send(msg);
+              alert('Atualizado com sucesso');
+              //window.history.back();
           }else{
             alert('Não existe registros para serem atualizados!');
           }
@@ -89,6 +109,17 @@
           return false;
       }
 
+      function pInfo(index){
+        var info_id  = 'id_info_' + index.toString();
+        var info_text = document.getElementById(info_id).value;
+        var output = prompt("info:", info_text);
+        document.getElementById(info_id).value = output;
+        var idelement = 'id_updated_' + index.toString();
+        document.getElementById(idelement).value = '1';
+
+
+
+      }
     </script>
   </head>
   <body>
@@ -121,7 +152,7 @@
                $phpdate = strtotime( $row['moment'] );
 //               echo '<tr bgcolor="'. $bgColor .'" > <th>' . $row['id'] .  '</th><th> ' .  $row['username'] . '</th><th> ' . date( 'd/m/Y H:i:s', $phpdate ) . ' </th><th> ' . $row['name'] . ' </th> <th> ' . $row['answer'] . ' </th> <th> ' . number_format($row['score'] , 5, '.', ','). ' </th> </tr>';
 //               echo '<tr bgcolor="'. $bgColor .'" > <th>' . $row['id'] .  '</th><th> ' .  $row['username'] . '</th><th> ' . date( 'd/m/Y H:i:s', $phpdate ) . ' </th><th> ' . $row['name'] . ' </th> <th> ';
-                echo '<tr bgcolor="'. $bgColor .'" > <th><a href="' . $row['file'] . '">' . $row['id'] .  '</a> </th><th> ' .  $row['username'] . '</th><th> ' . date( 'd/m/Y H:i:s', $phpdate ) . ' </th><th> ' . $row['name'] . ' </th> <th> ';
+                echo '<tr bgcolor="'. $bgColor .'" > <th><a href="' . $row['file'] . '">' . $row['id'] .  '</a> </th> <th> ' .  $row['username'] . '</th><th> ' . date( 'd/m/Y H:i:s', $phpdate ) . ' </th><th> ' . $row['name'] . ' </th> <th> ';
 //               echo $row['answer'] ;
                $answers = array( 'accepted' , 'wrong answer', 'runtime error', 'compilation error', 'pending', 'submitted file corrupted');
                echo '<select id="id_answser_' . ($index-1) . '" onchange="setSelect(' . ($index-1) . ')">>';
@@ -133,7 +164,8 @@
                }
               echo '</select>';
                // <option value="accepted">accepted</option> <option value="wrong answer" selected>wrong answer</option> <option value="runtime error">runtime error</option> <option value="compilation error">compilation error</option> <option value="pending">pending</option></select>';
-               echo ' </th> <th> ' . number_format($row['score'] , 3, '.', ','). ' </th>';
+               echo '</th><th> <a href="javascript:pInfo('.  ($index - 1) .');"> info </a> <input type="hidden" id="id_info_'.  ($index - 1) .'" name="numberrow" value="'.   $row['info'] .'"> </th>';
+               echo '<th> ' . number_format($row['score'] , 3, '.', ','). ' </th>';
                echo ' </th> <th> <input type="text" id="id_elapsedtime_'.  ($index - 1) .'" value="' . number_format($row['elapsedtime'] , 5, '.', ','). '" maxlength="20" size="22" onkeypress="return isNumberKey(event, '. ($index - 1) .')" > </th> <th> <input type="hidden" id="id_updated_' . ($index-1) . '"  name="numberrow" value="0"> <input type="hidden" id="id_submissionID_'.  ($index - 1) .'" name="numberrow" value="'.   $row['id'] .'"> </th> </tr>';
                $index++;
              }//end-if($row = $result->fetch_assoc()) {
@@ -145,7 +177,7 @@
 
     </div>
 
-
+    
 
 <!--
     <div>

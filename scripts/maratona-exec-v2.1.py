@@ -1,4 +1,5 @@
 #!/home/mzamith/Apps/anaconda3/bin/python
+# Este fonte resolve o problema do arquivo corrompido compactado
 import difflib
 import requests
 import os

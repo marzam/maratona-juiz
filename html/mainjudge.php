@@ -69,7 +69,7 @@
         <li><a href="clarificationjudge.php"> Esclarecer dúvidas </a></li>
         <li><a href="submitjudge.php"> Submissões realizadas </a></li>
         <li><a href="score-judged.php"> Pontuação </a></li>
-        <li><a href="reports.php"> Relatórios </a></li>
+        <!--<li><a href="reports.php"> Relatórios </a></li>-->
         <li><a href="javascript:logout()"> Sair </a></li>
       </ul>
     </div>

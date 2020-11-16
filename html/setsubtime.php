@@ -23,9 +23,9 @@ function accepted($id, $prob_id, $ptime, $speedup){
   }
 }
 //------------------------------------------------------------------------------
-function compilitionError($id, $answer){
+function compilitionError($id, $answer, $info){
   echo '***compiling error ' . PHP_EOL;
-  $sql = 'UPDATE submission SET answer="'. $answer .'"  WHERE id="'. $id .'"';
+  $sql = 'UPDATE submission SET answer="'. $answer .'", info = "'.$info.'"  WHERE id="'. $id .'"';
   $result = execQuery($sql);
   if ($result != NULL)
     echo 'PHP Ok' . PHP_EOL;
@@ -41,6 +41,7 @@ function compilitionError($id, $answer){
   $prob_id = $_POST['prob_id'];
   $ptime   = $_POST['time'];
   $answer  = $_POST['answer'];
+  $info    = $_POST['info'];
 
 /*
   echo 'PHP user  : ' . $user .  PHP_EOL;
@@ -57,7 +58,7 @@ function compilitionError($id, $answer){
     accepted($id, $prob_id, $ptime, $speedup);
   else{
     echo $answer . PHP_EOL;
-    compilitionError($id, $answer);
+    compilitionError($id, $answer,  $info );
   }
 
 ?>
