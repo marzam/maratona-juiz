@@ -1,6 +1,6 @@
 <?php
   $pageTitle   = 'Sistema da UFRRJ - Sistema on-line';
-  $eventTitle1 = 'Sistema on-line de desafios paralelos';
+  $eventTitle1 = 'ERAD-RJ 2020';
   $eventTitle2 = '';
-  $judgeTitle  = 'Juiz on-line - Desafio Paralelo';
+  $judgeTitle  = 'Maratona da Programação Paralela';
 ?>

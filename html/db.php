@@ -7,23 +7,27 @@ $team     = '';
 
 //------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 function checkLoginTeam(){
-  $id       = $_COOKIE['login-team'];
+  
+  $info     = $_COOKIE['login-team'];
+  $aux = strpos($info,";");
+  $id = substr($info, 0, $aux);
+  $team_id = substr($info,$aux+1);
   $username = 'desconhecido';
   $name     = 'desconhecido';
   $team     = '';
-
-  $sql = 'select t1.name as team, t2.id as id, t2.username as username, t2.name as name FROM login as t2 inner join teams as t1 on t2.team_id = t1.id where t2.id="' . $id . '"; ';
-
+   
+  $sql = 'select t1.name as team, t1.id as team_id, t2.id as id, t2.username as username, t2.name as name, t2.email as email FROM login as t2 inner join teams as t1 on t2.team_id = t1.id where t2.id="' . $id . '"; ';
+ 
   return execQuery($sql);
 
 
-}
+}   
 
 
 
 function checkLoginJudge(){
   $id       = $_COOKIE['login-judge'];
-  $username = 'desconhecido';
+  $username = 'desconhecido'; 
   $name     = 'desconhecido';
   $team     = '';
 
@@ -94,8 +98,9 @@ function simpleScoreTable(){
       $index = 1;
       //$sql = 'SELECT SUM(speedup) as speedup, login.name as team FROM (SELECT MAX(score.speedup) as speedup, problem_id, user_id from score GROUP BY score.user_id, score.problem_id) AS temp INNER JOIN login ON login.id = temp.user_id GROUP BY user_id ORDER BY speedup DESC;';
       //$sql = 'SELECT SUM(score) as score, login.username as team FROM (SELECT MAX(submission.score) as score, problem_id, user_id FROM submission GROUP BY submission.user_id, submission.problem_id) AS temp INNER JOIN login ON login.id = temp.user_id GROUP BY user_id ORDER BY score DESC;';
-      $sql = 'SELECT SUM(score) as score, count(problem_id) as total, login.username as team FROM (SELECT t2.moment, t2.localid, t2.score, t2.user_id, t2.problem_id from (select moment, unix_timestamp(moment) as localid, score, user_id, problem_id from submission) as t2 INNER JOIN (SELECT MAX(unix_timestamp(moment)) as localid, problem_id, user_id FROM submission WHERE answer = "accepted" GROUP BY submission.user_id, submission.problem_id) as t1  ON t2.localid = t1.localid) as temp INNER JOIN login ON login.id = temp.user_id GROUP BY user_id ORDER BY score DESC;';
+      //$sql = 'SELECT SUM(score) as score, count(problem_id) as total, login.username as team FROM (SELECT t2.moment, t2.localid, t2.score, t2.user_id, t2.problem_id from (select moment, unix_timestamp(moment) as localid, score, user_id, problem_id from submission) as t2 INNER JOIN (SELECT MAX(unix_timestamp(moment)) as localid, problem_id, user_id FROM submission WHERE answer = "accepted" GROUP BY submission.user_id, submission.problem_id) as t1  ON t2.localid = t1.localid) as temp INNER JOIN login ON login.id = temp.user_id GROUP BY user_id ORDER BY score DESC;';
       //$sql = 'SELECT result.score, result.total, result.id, result.team_id, t3.name as team  FROM (SELECT SUM(score) as score, count(problem_id) as total, login.id as id, login.team_id as team_id FROM (SELECT t2.moment, t2.localid, t2.score, t2.user_id, t2.problem_id from (select moment, unix_timestamp(moment) as localid, score, user_id, problem_id from submission) as t2 INNER JOIN (SELECT MAX(unix_timestamp(moment)) as localid, problem_id, user_id FROM submission WHERE answer = "accepted" GROUP BY submission.user_id, submission.problem_id) as t1  ON t2.localid = t1.localid) as temp INNER JOIN login ON login.id = temp.user_id GROUP BY user_id ORDER BY score DESC) as result INNER JOIN teams as t3 where t3.id=result.team_id;';
+      $sql='SELECT SUM(score) as score, count(problem_id) as total, teams.name as team FROM (SELECT t2.moment, t2.localid, t2.score, t2.team_id, t2.problem_id from (select moment, unix_timestamp(moment) as localid, score, team_id, problem_id from submission) as t2 INNER JOIN (SELECT MAX(unix_timestamp(moment)) as localid, problem_id, team_id FROM submission WHERE answer = "accepted" GROUP BY submission.team_id, submission.problem_id) as t1  ON t2.localid = t1.localid) as temp INNER JOIN teams ON teams.id = temp.team_id GROUP BY team_id ORDER BY score DESC;';
       $result   = execQuery($sql);
       if ($result->num_rows > 0) {
         while($row = $result->fetch_assoc()) {

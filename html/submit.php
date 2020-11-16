@@ -11,7 +11,8 @@
         $username = $row['username'];
         $name     = $row['name'];
         $team     = $row['team'];
-        $id       = $_COOKIE['login-team'];
+        $team_id  = $row['team_id'];
+        
       }//end-if($row = $result->fetch_assoc()) {
   }//end-if ($result->num_rows > 0) {
 ?>
@@ -69,19 +70,22 @@
          <br>
          <hr>
          <?php
-           $sql = 'SELECT submission.*,problem.name  FROM submission INNER JOIN problem ON problem.id = submission.problem_id WHERE user_id = "' . $id . '" ORDER by submission.moment DESC;';
+           //$sql = 'SELECT submission.*,problm.name  FROM submission INNER JOIN problem ON problem.id = submission.problem_id WHERE user_id = "' . $id . '" ORDER by submission.moment DESC;';
+           //$sql = 'SELECT submission.*,problem.name  FROM submission INNER JOIN problem ON problem.id = submission.problem_id WHERE team_id = "'.$team_id.'" ORDER by submission.moment DESC;';
+           $sql = 'SELECT t1.*, login.username FROM (SELECT submission.*, problem.name  FROM submission INNER JOIN problem ON problem.id = submission.problem_id WHERE team_id =  "'.$team_id.'") as t1 INNER JOIN login ON login.id = t1.user_id ORDER by t1.moment DESC;';
+           
            $result   = execQuery($sql);
            if ($result->num_rows > 0) {
              echo '<h1 align="center"> Submissões realizadas </h1>';
              echo '<table border="0" style="width:100%;">';
-             echo '<tr bgcolor="#afafaf"> <th> ID </th><th> data/hora </th><th> problemas </th> <th> resposta </th> <th> pontuação </th> </tr>';
+             echo '<tr bgcolor="#afafaf"> <th> ID </th><th> username </th><th> data/hora </th><th> problemas </th> <th> resposta </th> <th> pontuação </th> </tr>';
              $index = 1;
              while($row = $result->fetch_assoc()) {
                  $bgColor = '#dfdfdf';
                  if (($index % 2) == 0)
                    $bgColor = '#d0d0d0';
                $phpdate = strtotime( $row['moment'] );
-               echo '<tr bgcolor="'. $bgColor .'" > <th>' . $row['id'] .  '</th><th> ' . date( 'd/m/Y H:i:s', $phpdate ) . ' </th><th> ' . $row['name'] . ' </th> <th> ' . $row['answer'] . ' </th> <th> ' . number_format(($row['score']) , 5, '.', ','). ' </th> </tr>';
+               echo '<tr bgcolor="'. $bgColor .'" > <th>' . $row['id'] .  '</th><th> ' . $row['username'] .  '</th><th> ' . date( 'd/m/Y H:i:s', $phpdate ) . ' </th><th> ' . $row['name'] . ' </th> <th> ' . $row['answer'] . ' </th> <th> ' . number_format(($row['score']) , 5, '.', ','). ' </th> </tr>';
                $index++;
              }//end-if($row = $result->fetch_assoc()) {
 

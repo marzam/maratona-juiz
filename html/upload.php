@@ -3,11 +3,31 @@
   include 'db.php';
 
   $zeros    = '00000000000';
-  $user_id  = $_COOKIE['login-team'];
   $prob_id  = $_POST['cmbProblem'];
+  
+
+  $result   =checkLoginTeam();
+  //$result   = execQuery($sql);
+
+
+  if ($result->num_rows > 0) {
+      if($row = $result->fetch_assoc()) {
+        $username = $row['username'];
+        $name     = $row['name'];
+        $team     = $row['team'];
+        $user_id  = $row['id'];
+        $team_id  = $row['team_id'];
+        
+      }//end-if($row = $result->fetch_assoc()) {
+  }//end-if ($result->num_rows > 0) {
+
+  
   //$arch     =  $_POST['cmbarchitecture'];
   $username = 'desconhecido';
   $name     = 'desconhecido';
+
+
+
 
   $lid         = substr($zeros . $user_id, -strlen($zeros));
   $problem     = substr($zeros . $prob_id, -strlen($zeros));
@@ -16,7 +36,7 @@
   $target_file = str_replace(' ', '', $lid . '-' .  $problem . '-' . $curr . '.tar.gz');
   $score       = '1';
 
-  $sql = 'INSERT INTO submission (user_id, problem_id, moment, file, score) VALUES ("' . $user_id . '", "' . $prob_id . '", "' . $curr . '", "' . $target_dir . $target_file . '", "'. $score .'");';
+  $sql = 'INSERT INTO submission (user_id, problem_id, moment, file, score, team_id) VALUES ("' . $user_id . '", "' . $prob_id . '", "' . $curr . '", "' . $target_dir . $target_file . '", "'. $score .'", "'. $team_id .'");';
   $result = execQuery($sql);
 //  echo $sql .'<br><br>' . $result . '<br>';
 

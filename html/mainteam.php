@@ -10,6 +10,7 @@
         $username = $row['username'];
         $name     = $row['name'];
         $team     = $row['team'];
+       
       }//end-if($row = $result->fetch_assoc()) {
   }//end-if ($result->num_rows > 0) {
 ?>

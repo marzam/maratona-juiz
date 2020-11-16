@@ -61,10 +61,10 @@
     <div class="loginborda">
       <h3 align="center">Equipe: <strong><?php echo $team; ?></strong></h3>
       <h3 align="center">Usuário: <?php echo $username; ?></h3>
-      
+      <h3 align="center">Relatórios</h3>
       <ul>
-        <li><a href="addproblem.php"> Cadastrar problema </a></li>
-        <li><a href="listproblems.php"> Listar problemas </a></li>
+        <li><a href="addproblem.php"> Pontuação por equipe </a></li>
+        <li><a href="listproblems.php"> Pontuação por matatonista </a></li>
         <li><a href="tojudge.php"> Jugar </a></li>
         <li><a href="clarificationjudge.php"> Esclarecer dúvidas </a></li>
         <li><a href="submitjudge.php"> Submissões realizadas </a></li>

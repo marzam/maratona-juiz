@@ -27,7 +27,9 @@
            document.getElementById("id_doubt").value = "";
           document.getElementById("id_answerCheck").value = "-1";
         }
-
+        function goMenu(){
+          window.open("mainteam.php", "_self");
+        }
         function checkboxClick(obj){
 
           var obj_id = obj.id;
@@ -62,7 +64,7 @@
     </div>
 
     <div style="border: 2px solid #dadada; background-color: #dadada; height: 100px; width: 600px; border-radius: 8px; margin-left: auto; margin-right: auto;">
-      <a align="left" href="javascript:history.back()"> Voltar </a>
+      <a align="left"href="javascript:goMenu()"> Voltar </a>
       <h3 align="center">Equipe: <strong><?php echo $team; ?></strong></h3>
       <h3 align="center">Usuário: <?php echo $username; ?></h3>
 

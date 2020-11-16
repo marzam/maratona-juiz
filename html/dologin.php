@@ -3,7 +3,7 @@
   include 'db.php';
   $user   = $_POST['idLogin'];
   $passwd = $_POST['idPasswd'];
-  $sql = 'SELECT id,type, username, fasscess FROM login WHERE username = "' . $user . '" AND password = "' . md5($passwd) . '";';
+  $sql = 'SELECT id,team_id, type, username, fasscess FROM login WHERE username = "' . $user . '" AND password = "' . md5($passwd) . '";';
   //echo $sql . '<br>';
   $result = execQuery($sql);
 
@@ -20,7 +20,9 @@
             echo '</script>';
           }else if ($row['type'] == '1'){//team
             //echo 'team<br>'  ;
-            setcookie('login-team', $row['id'], time() + (60*60*24*1000));
+            $info = $row['id'].';'.$row['team_id'];
+            setcookie('login-team', $info , time() + (60*60*24*1000));
+           // setcookie('login-team', $row['id'], time() + (60*60*24*1000));
             echo '<script>';
             echo 'window.open("mainteam.php","_self")';
             echo '</script>';

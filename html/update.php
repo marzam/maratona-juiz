@@ -1,21 +1,20 @@
 <?php
   include 'vars.php';
-  include 'db.php';
+ include 'db.php';
 
-  $id       = $_COOKIE['login-team'];
-  $username = 'desconhecido';
-  $name     = 'desconhecido';
-  $sql      = 'SELECT * FROM login WHERE id = "' . $id . '"; ';
-
-  $result   = execQuery($sql);
+ 
+  $result   =checkLoginTeam();
 
 
   if ($result->num_rows > 0) {
       if($row = $result->fetch_assoc()) {
         $username   = $row['username'];
         $name       = $row['name'];
-        $passwd     = $row['password'];
+        $passwd     = ''; //$row['password'];
         $email      = $row['email'];
+        $team     = $row['team'];
+        $id = $row['id'];
+        
       }//end-if($row = $result->fetch_assoc()) {
   }//end-if ($result->num_rows > 0) {
 ?>
@@ -68,11 +67,17 @@
 
     </div>
     <fieldset>
-          <legend>&nbsp; Registro da equipe  &nbsp; </legend>
+          <legend>&nbsp; Registro do usuário  &nbsp; </legend>
          <form method="post" action="doupdate.php">
           <br>
 
-          <div> <label>Nome da equipe</label>
+          <div> <label>Equipe</label>
+            <?php echo '<div> <input id="id_team" name="id_team" type="text"   value = "'. $team .'" readonly> </div>'  ?>
+            <!-- <div> <input id="id_name" name="id_name" type="text"  > </div> -->
+          </div>
+          <br>
+
+          <div> <label>Nome</label>
             <?php echo '<div> <input id="id_name" name="id_name" type="text"   value = "'. $name .'" > </div>'  ?>
             <!-- <div> <input id="id_name" name="id_name" type="text"  > </div> -->
           </div>
