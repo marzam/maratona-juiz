@@ -6,7 +6,7 @@ import sys
 import os
 import shutil
 import glob
-source_path = '/j-files/answers/*.tar.gz'
+source_path = '/var/www/html/answers/'
 
 
 print('ATENÇÃO:')
