@@ -14,6 +14,9 @@
          
       }//end-if($row = $result->fetch_assoc()) {
   }//end-if ($result->num_rows > 0) {
+  else{
+    echo ' <script type="text/javascript"> window.open("login.php", "_self"); </script>';
+  }
 ?>
 <!DOCTYPE html>
 <html>

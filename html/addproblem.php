@@ -12,7 +12,9 @@
         $team     = $row['team'];
       }//end-if($row = $result->fetch_assoc()) {
   }//end-if ($result->num_rows > 0) {
-
+  else{
+    echo ' <script type="text/javascript"> window.open("login.php", "_self"); </script>';
+  }
   $id_prob = '-1';
   $problem = '';
   $time = '';
@@ -159,7 +161,7 @@
             echo '  </table>';
             echo ' <label >Descrição: </label>';
             echo ' <br>';
-            echo ' <textarea id="id_description" rows = "10"  cols = "82"  maxlength = "256"  name = "id_description"  style="resize: none;">'.$desc.'</textarea><br>';
+            echo ' <textarea id="id_description" rows = "10"  cols = "82"  maxlength = "2048"  name = "id_description"  style="resize: none;">'.$desc.'</textarea><br>';
             echo ' <br>';
             echo '  <table style="width: 100%" border="0" align="center">';
             echo '      <tr>';

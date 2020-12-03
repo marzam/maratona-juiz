@@ -5,6 +5,22 @@ $username = '';
 $name     = '';
 $team     = '';
 
+function getContinue($strFinal){
+  $t=time();
+  $strCurr = date("Y-m-d H:m:s",$t);
+
+  $finalDate = new DateTime($strFinal);
+  $currDate  = new DateTime($strCurr);
+
+//      $dteDiff  = $dteStart->diff($dteEnd);
+
+//      return (bool) var_dump($currDate  < $finalDate );  
+
+  return intval($currDate < $finalDate);
+}
+
+
+
 //------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 function checkLoginTeam(){
   
@@ -64,6 +80,7 @@ function execQuery($mysql){
 }
 
 function simpleScoreTable(){
+  
   $sql = 'SELECT  count(*) as problems FROM problem;';
   $result   = execQuery($sql);
   $nProblems = 0;
