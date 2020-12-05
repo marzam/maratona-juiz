@@ -20,8 +20,10 @@ for ($i = 0; $i < $xmlData->count(); $i++){
     $id     = (string)$records[$i]['id'];
     $answer = (string)$records[$i]['answer'];
     $elapsedtime = (string)$records[$i]['elapsedtime'];
+    $score = (string)$records[$i]['score'];
+    //$score = $pelapsedtime / $elapsedtime
     $info = (string)$records[$i]['info'];
-    $sql = 'UPDATE submission SET  answer = "'. $answer .'", elapsedtime = "'. $elapsedtime .'", info = "'.$info.'" WHERE id = "'. $id .'" ';
+    $sql = 'UPDATE submission SET  score = "' .$score .'", answer = "'. $answer .'", elapsedtime = "'. $elapsedtime .'", info = "'.$info.'" WHERE id = "'. $id .'" ';
     $result   = execQuery($sql);
   //  fwrite($handle,  $sql . PHP_EOL);
     

@@ -63,10 +63,13 @@
               recID           = document.getElementById('id_submissionID_' +  i.toString()).value;
               recAnswer       = document.getElementById('id_answser_' +  i.toString()).value;
               recElapsedtime  = document.getElementById('id_elapsedtime_' +  i.toString()).value;
+              recPElapsedtime = document.getElementById('id_p_elapsedtime_' +  i.toString()).value;
+              
               recInfo  = document.getElementById('id_info_' +  i.toString()).value;
               data.setAttribute('id', recID);
               data.setAttribute('answer', recAnswer);
               data.setAttribute('elapsedtime', recElapsedtime);
+              data.setAttribute('score', (recPElapsedtime / recElapsedtime));
               data.setAttribute('info', recInfo);
               record.appendChild(data);
               //alert('Registro: ' + recID + '\n' + recAnswer + '\n' + recElapsedtime);
@@ -142,7 +145,7 @@
          <button type="button" onclick="updateSendXML();">Update</button> 
          <?php
            //$sql = 'SELECT submission.*,problem.name  FROM submission INNER JOIN problem ON problem.id = submission.problem_id ORDER by submission.moment DESC;';
-           $sql = 'SELECT login.username, submission.*,problem.name  FROM submission  INNER JOIN problem ON problem.id = submission.problem_id  INNER JOIN login ON login.id = submission.user_id  ORDER by submission.moment DESC;';
+           $sql = 'SELECT login.username, submission.*,problem.name, problem.time  FROM submission  INNER JOIN problem ON problem.id = submission.problem_id  INNER JOIN login ON login.id = submission.user_id  ORDER by submission.moment DESC;';
            $result   = execQuery($sql);
            if ($result->num_rows > 0) {
              echo '<h1 align="center"> Submissões realizadas </h1>';
@@ -157,9 +160,9 @@
 //               echo '<tr bgcolor="'. $bgColor .'" > <th>' . $row['id'] .  '</th><th> ' .  $row['username'] . '</th><th> ' . date( 'd/m/Y H:i:s', $phpdate ) . ' </th><th> ' . $row['name'] . ' </th> <th> ';
                 echo '<tr bgcolor="'. $bgColor .'" > <th><a href="' . $row['file'] . '">' . $row['id'] .  '</a> </th> <th> ' .  $row['username'] . '</th><th> ' . date( 'd/m/Y H:i:s', $phpdate ) . ' </th><th> ' . $row['name'] . ' </th> <th> ';
 //               echo $row['answer'] ;
-               $answers = array( 'accepted' , 'wrong answer', 'runtime error', 'compilation error', 'pending', 'submitted file corrupted');
+               $answers = array( 'accepted' , 'wrong answer', 'runtime error', 'compilation error', 'pending', 'submitted file corrupted', 'time out');
                echo '<select id="id_answser_' . ($index-1) . '" onchange="setSelect(' . ($index-1) . ')">>';
-               for ($i = 0; $i < 6; $i++){
+               for ($i = 0; $i < 7; $i++){
                   $selected = '';
                   if ( $answers[$i] == $row['answer'] )
                     $selected = 'selected ';
@@ -169,7 +172,7 @@
                // <option value="accepted">accepted</option> <option value="wrong answer" selected>wrong answer</option> <option value="runtime error">runtime error</option> <option value="compilation error">compilation error</option> <option value="pending">pending</option></select>';
                echo '</th><th> <a href="javascript:pInfo('.  ($index - 1) .');"> info </a> <input type="hidden" id="id_info_'.  ($index - 1) .'" name="numberrow" value="'.   $row['info'] .'"> </th>';
                echo '<th> ' . number_format($row['score'] , 3, '.', ','). ' </th>';
-               echo ' </th> <th> <input type="text" id="id_elapsedtime_'.  ($index - 1) .'" value="' . number_format($row['elapsedtime'] , 5, '.', ','). '" maxlength="20" size="22" onkeypress="return isNumberKey(event, '. ($index - 1) .')" > </th> <th> <input type="hidden" id="id_updated_' . ($index-1) . '"  name="numberrow" value="0"> <input type="hidden" id="id_submissionID_'.  ($index - 1) .'" name="numberrow" value="'.   $row['id'] .'"> </th> </tr>';
+               echo ' </th> <th> <input type="text" id="id_elapsedtime_'.  ($index - 1) .'" value="' . number_format($row['elapsedtime'] , 5, '.', ','). '" maxlength="20" size="10" onkeypress="return isNumberKey(event, '. ($index - 1) .')" > <input type="text" id="id_p_elapsedtime_'.  ($index - 1) .'" value="' . number_format($row['time'] , 5, '.', ','). '" size="10" readonly> </th> <th> <input type="hidden" id="id_updated_' . ($index-1) . '"  name="numberrow" value="0"> <input type="hidden" id="id_submissionID_'.  ($index - 1) .'" name="numberrow" value="'.   $row['id'] .'"> </th> </tr>';
                $index++;
              }//end-if($row = $result->fetch_assoc()) {
              echo '</table>';
