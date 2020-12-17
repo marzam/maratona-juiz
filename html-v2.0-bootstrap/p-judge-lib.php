@@ -22,6 +22,7 @@ function getContinue($strFinal){
 
 function printHeader(){
   echo '<head>';
+  echo '<link rel="shortcut icon" href="#" />';
   echo '  <meta charset="utf-8">';
   echo '  <meta name="viewport" content="width=device-width, initial-scale=1">';
   echo '  <link rel="stylesheet" href="css-bootstrap/bootstrap.min.css">';
@@ -54,16 +55,26 @@ function checkLoginTeam(){
 
 
 function checkLoginJudge(){
-  $id       = $_COOKIE['login-judge'];
-  $username = 'desconhecido'; 
-  $name     = 'desconhecido';
-  $team     = '';
+  $ret = 0;
+  $GLOBALS['id']       = $_COOKIE['login-judge'];
+  $GLOBALS['username'] = 'desconhecido'; 
+  $GLOBALS['name']     = 'desconhecido';
+  $GLOBALS['team']     = '';
 
-  $sql = 'select t1.name as team, t2.id as id, t2.username as username, t2.name as name FROM login as t2 inner join teams as t1 on t2.team_id = t1.id where t2.id="' . $id . '"; ';
+  $sql = 'select t1.name as team, t2.id as id, t2.username as username, t2.name as name FROM login as t2 inner join teams as t1 on t2.team_id = t1.id where t2.id="' . $GLOBALS['id'] . '"; ';
+//  echo $sql . '<hr>';
+  $result = execQuery($sql);
 
-  return execQuery($sql);
+  if ($result->num_rows > 0) {
+    if($row = $result->fetch_assoc()) {
+      $GLOBALS['username'] = $row['username'];
+      $GLOBALS['name']  = $row['name'];
+      $GLOBALS['team']  = $row['team'];
+      $ret = 1;
+    }
+  }
 
-
+  return $ret;
 }
 
 

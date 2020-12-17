@@ -18,7 +18,7 @@ include 'p-judge-lib.php';
                     <div> <input id="idPasswd" name="idPasswd" type="password"  placeholder="password" > </div>
 
                 </div>
-                <p class="mt-4"> <input class = "btn btn-lg btn-primary btn-block" value="Logar" type="submit"> </p>
+                <p class="mt-4"> <input class = "btn btn-lg btn-dark btn-block" value="Logar" type="submit"> </p>
                 <p > <a href="javascript:forgot_password()">esqueceu sua senha ?</a> </p>
             </form>
             

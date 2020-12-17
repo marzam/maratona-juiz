@@ -21,7 +21,9 @@
           }else if ($row['type'] == '1'){//team
             //echo 'team<br>'  ;
             $info = $row['id'].';'.$row['team_id'];
+            
             setcookie('login-team', $info , time() + (60*60*24*1000));
+           //setcookie('login-team', $info , time() + (60*60*24*1000), ['samesite' => 'None', 'secure' => true]);
            // setcookie('login-team', $row['id'], time() + (60*60*24*1000));
             echo '<script>';
             echo 'window.open("mainteam.php","_self")';
