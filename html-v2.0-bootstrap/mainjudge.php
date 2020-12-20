@@ -25,7 +25,8 @@
   <!--  <link href="vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet"> -->
   <link href="css-bootstrap/bootstrap.min.css" rel="stylesheet">
   <link href="css-p-judge/simple-sidebar.css" rel="stylesheet">
-  <script type="text/javascript" src="p-judge.js"></script>
+  <script type="text/javascript" src="js-p-judge/p-judge.js"></script>
+  
 
 </head>
 

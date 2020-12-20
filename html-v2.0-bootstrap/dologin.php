@@ -1,6 +1,6 @@
 <?php
 //INSERT INTO login (name, password, score, type, username) values ('Marcelo', '12345', '0', '1', 'mzamith')
-  include 'db.php';
+  include 'p-judge-lib.php';
   $user   = $_POST['idLogin'];
   $passwd = $_POST['idPasswd'];
   $sql = 'SELECT id,team_id, type, username, fasscess FROM login WHERE username = "' . $user . '" AND password = "' . md5($passwd) . '";';
