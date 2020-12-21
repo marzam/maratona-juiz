@@ -1,6 +1,12 @@
 <?php
 //include 'db.php';
 include 'p-judge-lib.php';
+echo '[' . $_POST['idCSV'] . '] <hr>';
+
+
+
+
+/*
 $dataPOST = trim(file_get_contents('php://input'));
 $xmlData = simplexml_load_string($dataPOST);
 $handle = fopen('log.txt', "a+");
@@ -30,7 +36,7 @@ for ($i = 0; $i < $xmlData->count(); $i++){
 }//end-for ($i = 0; $i < $xmlData->count(); $i++){
 
 fclose($handle)    ;
-
+*/
 //echo ' <script type="text/javascript"> window.open("mainjudge.php", "_self"); </script>';
 
 ?>

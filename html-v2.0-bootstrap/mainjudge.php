@@ -99,9 +99,17 @@
           <div class="container-fluid">
               <!-- begin content --------------------------------------------------------------------------------------------------- -->
               <div  class="d-flex flex-row-reverse pt-2">   
-              <button class = "btn btn-sm btn-dark btn-block " type="button" onclick="updateSubmissionsXML();">Update</button> 
+              <button class = "btn btn-sm btn-dark btn-block " type="button" onclick="updateSubmissionsCSV();">Update</button> 
               </div> 
-
+<!-- -->
+<!-- <div class="invisible"> -->
+<div class="visible">
+           <form action="updatedSubmission.php"  method="post" id="id_form_send">
+             <textarea id="idCSV" maxlength = "16384"  name = "idCSV"  style="resize: none;"></textarea><br>
+             <input type="submit" value="Submit">
+           </form>
+</div>
+<!-- -->
               
               <?php
                       //$sql = 'SELECT submission.*,problem.name  FROM submission INNER JOIN problem ON problem.id = submission.problem_id ORDER by submission.moment DESC;';
