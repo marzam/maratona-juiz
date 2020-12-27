@@ -59,42 +59,39 @@ function isNumberKey(evt, index){
         return true;
     return false;
 }
-
 function updateSubmissionsCSV(){
-   
-    var CSV = "";
-    var mIndex = document.getElementById('id_index_value').value;
-    //alert('update:' + mIndex.toString());
-    var flag = 0;
-    //id_updated_
-    for (var i = 0; i < mIndex; i++){
-      var id = 'id_updated_' +  i.toString();
-      var opt = document.getElementById(id).value;
-      var recID = '';
-      var recAnswer = '';
-      //var recElapsedtime = '';
-      
-      if (opt == '1'){
-        flag = 1;
-        recID           = document.getElementById('id_submissionID_' +  i.toString()).value + " ";
-        recAnswer       = document.getElementById('id_answser_' +  i.toString()).value + " "; 
-        //recElapsedtime  = document.getElementById('id_elapsedtime_' +  i.toString()).value + " ";
-        recPElapsedtime = document.getElementById('id_p_elapsedtime_' +  i.toString()).value + " ";
-        recInfo  = document.getElementById('id_info_' +  i.toString()).value + " ";
-        CSV = CSV + recID + ";" + recAnswer + ";" + recPElapsedtime + ";" + recInfo + "\n";
 
-      }//end-if (opt == '1'){
-        
-    }//end-for (var i = 0; i < mIndex; i++){
-    //doc.appendChild(record);
-    if (flag == 1){
-        document.getElementById('idCSV').value = CSV;
+  var CSV = '';
+  var mIndex = document.getElementById('id_index_value').value;
+  //alert('update:' + mIndex.toString());
+  var flag = 0;
+  //id_updated_
+  //var n_count = 1;
+  for (var i = 0; i < mIndex; i++){
+    var id = 'id_updated_' +  i.toString();
+    var opt = document.getElementById(id).value;
+    var recID = '';
+    var recAnswer = '';
+    //var recElapsedtime = '';
+    if (opt == '1'){
+      flag = 1;
+      recID           = document.getElementById('id_submissionID_' +  i.toString()).value + ' ;';
+      recAnswer       = document.getElementById('id_answser_' +  i.toString()).value + ' ;';
+      recElapsedtime  = document.getElementById('id_elapsedtime_' +  i.toString()).value + ' ;';
+      recPElapsedtime = document.getElementById('id_p_elapsedtime_' +  i.toString()).value + ' ;';
+      recInfo  = document.getElementById('id_info_' +  i.toString()).value + ' ;';
+      CSV = CSV + recID + recAnswer  + recPElapsedtime +  recInfo + recElapsedtime;
+      //n_count++;
+    }//end-if (opt == '1'){
 
-    }else{
-      alert('Não existe registros para serem atualizados!');
-    }
-    
-    
+  }//end-for (var i = 0; i < mIndex; i++){
+  //doc.appendChild(record);
+  if (flag == 1){
+      document.getElementById('idCSV').value = CSV;
+      document.getElementById('id_form_send').submit();
+      //document.getElementById('idCSV').value = n_count.toString() +  '|' + CSV;
 
-    
+  }else{
+    alert('Não existe registros para serem atualizados!');
+  }
 }

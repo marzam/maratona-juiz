@@ -102,11 +102,11 @@
               <button class = "btn btn-sm btn-dark btn-block " type="button" onclick="updateSubmissionsCSV();">Update</button> 
               </div> 
 <!-- -->
-<!-- <div class="invisible"> -->
-<div class="visible">
+<div class="invisible">
+<!-- <div class="visible"> --> 
            <form action="updatedSubmission.php"  method="post" id="id_form_send">
              <textarea id="idCSV" maxlength = "16384"  name = "idCSV"  style="resize: none;"></textarea><br>
-             <input type="submit" value="Submit">
+            <!--  <input type="submit" value="Submit"> -->
            </form>
 </div>
 <!-- -->

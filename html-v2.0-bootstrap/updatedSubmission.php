@@ -1,10 +1,43 @@
 <?php
 //include 'db.php';
 include 'p-judge-lib.php';
-echo '[' . $_POST['idCSV'] . '] <hr>';
+$strCSV = $_POST['idCSV'];
+//echo '[' . $strCSV . '] <hr>';
 
+$field = explode(';', $strCSV);
+$i = 0;
+$error = 0;
+while (($field[$i] != '') && ($error == 0)){
+    $id              = trim($field[$i]);
+    $answer          = trim($field[$i+1]);
+    $elapsedtime    = '000'+trim($field[$i+2]);
+    $recInfo         = trim($field[$i+3]);
+    $pElapsedtime     = '000'+trim($field[$i+4]);
+    //echo '>>>>>' . $pElapsedtime  . '<hr>';
+    //echo '>>>>>' . $elapsedtime   . '<hr>';
+    if ($pElapsedtime > 0)
+        $score           =  $elapsedtime / $pElapsedtime;
+    else{
+        $score = '1';
+        $pElapsedtime = $elapsedtime;
+    }
+        
+    $i+=5;
+    $sql = 'UPDATE submission SET  score = "' .$score .'", answer = "'. $answer .'", elapsedtime = "'. $pElapsedtime .'", info = "'.$info.'" WHERE id = "'. $id .'" ';
+//    echo $sql .'<hr>';
+    $result   = execQuery($sql);
+    if ($result != 0)
+        $error = 0;
+    else $error = 1;
 
+}
+echo '<script>';
 
+if ($error != 0){
+    echo 'alert("Error na atualização!");';
+}
+echo 'window.open("mainjudge.php","_self")';
+echo '</script>';
 
 /*
 $dataPOST = trim(file_get_contents('php://input'));
