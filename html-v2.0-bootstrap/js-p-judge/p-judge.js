@@ -59,6 +59,7 @@ function isNumberKey(evt, index){
         return true;
     return false;
 }
+
 function updateSubmissionsCSV(){
 
   var CSV = '';
@@ -94,4 +95,13 @@ function updateSubmissionsCSV(){
   }else{
     alert('Não existe registros para serem atualizados!');
   }
+}
+
+function top10Submission(obj){
+  var ret = obj.checked;
+  
+  if (ret)
+    window.open("mainjudge.php?all=1","_self");
+  else
+    window.open("mainjudge.php","_self");
 }
