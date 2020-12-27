@@ -63,12 +63,12 @@
             </li>
 -->
             <li class="nav-item">
-              <a class="nav-link" href="#">[Lista de problemas] <span class="sr-only"></span></a>
+            <a class="nav-link" href="listproblems.php">Lista de problemas</a>
               
             </li>
 
             <li class="nav-item">
-              <a class="nav-link" href="clarificationjudge.php">Dúvidas</a>
+              <a class="nav-link" href="#">[Dúvidas]<span class="sr-only"></span></a>
             </li>
 
             <li class="nav-item">
@@ -110,41 +110,49 @@
               </div> -->
 
 <!--- Inserting content -->
-                      <form action="addproblem.php"  method="post" enctype="multipart/form-data" id="listForm">
-                          <?php
-                              $sql = 'SELECT * from problem;';
-                              $result   = execQuery($sql);
-                              if ($result->num_rows > 0) {
-                                  echo '<h3> Problemas cadastrados </h3>';
-                                  echo '<table class="table table-condensed">';
-                                  echo '<thead>';
-                                  echo '<tr>';
-                                  echo '<th>ID</th>';
-                                  echo '<th>Nome</th>';
-                                  echo '<th >Tempo (s)</th>';
-                                  echo '<th>Visível</th>';
-                                  echo '</tr>';
-                                  echo '</thead>';
-                                  echo '<tbody>';
-//                                  echo '<tr  bgcolor="#afafaf"> <th>ID</th> <th>Nome</th> <th>Tempo (s)</th> <th>Visível</th> <th>Saída</th></tr>';
-                                  $index = 1;
-                                  while($row = $result->fetch_assoc()) {
-                                      $bgColor = '#dfdfdf';
-                                      if (($index % 2) == 0)
-                                      $bgColor = '#d0d0d0';
-//                                      echo '<tr bgcolor="'. $bgColor .'" > <td>' . $row['id'] .  '</td><td>  <a href="javascript:mySubmit(' . $row['id'] .  ')">' .  $row['name'] . '</a></td><td> ' .  number_format($row['time'] , 5, '.', ',') . ' </td><td> ' . $row['visible'] . ' </td>';
-                                      echo '<tr bgcolor="'. $bgColor .'" > <td>' . $row['id'] .  '</td><td>  <a href="javascript:mySubmit(' . $row['id'] .  ')">' .  $row['name'] . '</a></td><td> ' . money_format("%=_(#15.5n",$row['time']) . ' </td><td> ' . $row['visible'] . ' </td>';
-                                    $index++;
-                                  }//end-if($row = $result->fetch_assoc()) {
-                                  echo '</tbody>';
-                                  echo '</table>';
-                                  echo '<br>';
-                                  echo '<input type="hidden" id="id_id"  name="id_id" value="-1">';
-                              }//end-
-                          ?>
-                      </form>
 
+          <h3 align="center"> Esclarecimento </h3>
+           <table >
+             <!--
+             <colgroup>
+                <col style="width:50%;">
+                <col style="width:50%;">
+             </colgroup>
+           -->
+             <?php
 
+               $index = 1;
+               $sql = 'SELECT id, doubt, answer FROM clarification WHERE answered = "0" ORDER BY datetime ASC;';
+               $result   = execQuery($sql);
+
+               if ($result->num_rows > 0) {
+                 while($row = $result->fetch_assoc()) {
+                   $bgColor = '#dfdfdf';
+                   if (($index % 2) == 0)
+                    $bgColor = '#d0d0d0';
+
+                   $idopt = 'id_doubt_' . $index;
+                   echo '<tr bgcolor="'. $bgColor .'" > <td  align="justify">' . $row['doubt'] .  '</a> </td> <td align="justify">  <input type="hidden" id="' . $idopt . '" name="' . $idopt . '" value="' . $row['id'] . '"> <input type="checkbox" id="id_check_'.$index.'" name="id_check_'.$index.'"  onclick="checkboxClickJudgeClarrification(this);" />&nbsp; </td>  </tr>';
+                  $index += 1;
+                 }//end-if($row = $result->fetch_assoc()) {
+
+               }//end-if ($result->num_rows > 0) {
+               $index -= 1;
+             ?>
+           </table>
+           <?php
+              echo '<input type="hidden" id="id_numberrow" name="numberrow" value="'. $index .'">';
+           ?>
+           <br>
+           <form action="saveclarificationjudge.php"  method="post">
+             <?php echo '<input type="hidden" id="id_user" name="id_user" value="'. $id . '">'; ?>
+             <textarea id="id_answer" rows = "5" cols = "82"  maxlength = "2048"  name = "id_answer"  style="resize: none;"></textarea><br>
+             <input type="hidden" id="id_answerCheck" name="id_answerCheck" value="-1">
+             <input id="id_submit" type="submit" value="Enviar">
+             <!-- <button  type="button" onclick="onSubmit();">Enviar</button> -->
+             <button id="id_clear" type="button" onclick="onClearJudgeClarrification();">Limpa</button>
+
+           </form>
 
 
 <!--- End inserting content -->            

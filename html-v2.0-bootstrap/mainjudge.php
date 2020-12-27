@@ -55,7 +55,7 @@
         <div class="collapse navbar-collapse" id="navbarSupportedContent">
           <ul class="navbar-nav ml-auto mt-2 mt-lg-0">
             <li class="nav-item active">
-              <a class="nav-link" href="#">Jugar <span class="sr-only">  &#8592; </span></a>
+              <a class="nav-link" href="#">[Jugar] <span class="sr-only"></span></a>
             </li>
 <!--
             <li class="nav-item">
@@ -67,11 +67,11 @@
             </li>
 
             <li class="nav-item">
-              <a class="nav-link" href="#">Esclarecimento de dúvidas</a>
+              <a class="nav-link" href="clarificationjudge.php">Dúvidas</a>
             </li>
 
             <li class="nav-item">
-              <a class="nav-link" href="#">Pontuação</a>
+              <a class="nav-link" href="score-judge">Pontuação</a>
             </li>
 
             <li class="nav-item">
@@ -103,7 +103,7 @@
           <div class="container-fluid">
               <!-- begin content --------------------------------------------------------------------------------------------------- -->
               <div  class="d-flex flex-row-reverse pt-2">   
-              <button class = "btn btn-sm btn-dark btn-block " type="button" onclick="updateSubmissionsCSV();">Update</button> 
+              <button class = "btn btn-sm btn-dark btn-block " type="button" onclick="updateSubmissionsCSV();">Atualizar</button> 
               </div> 
 <!-- -->
 <div class="invisible">
@@ -150,9 +150,9 @@
                             if (($index % 2) == 0)
                               $bgColor = '#dadada';
                           $phpdate = strtotime( $row['moment'] );
-            //               echo '<tr bgcolor="'. $bgColor .'" > <th>' . $row['id'] .  '</th><th> ' .  $row['username'] . '</th><th> ' . date( 'd/m/Y H:i:s', $phpdate ) . ' </th><th> ' . $row['name'] . ' </th> <th> ' . $row['answer'] . ' </th> <th> ' . number_format($row['score'] , 5, '.', ','). ' </th> </tr>';
-            //               echo '<tr bgcolor="'. $bgColor .'" > <th>' . $row['id'] .  '</th><th> ' .  $row['username'] . '</th><th> ' . date( 'd/m/Y H:i:s', $phpdate ) . ' </th><th> ' . $row['name'] . ' </th> <th> ';
-                            echo '<tr bgcolor="'. $bgColor .'" > <th><a href="' . $row['file'] . '">' . $row['id'] .  '</a> </th> <th> ' .  $row['username'] . '</th><th> ' . date( 'd/m/Y H:i:s', $phpdate ) . ' </th><th> ' . $row['name'] . ' </th> <th> ';
+            //               echo '<tr bgcolor="'. $bgColor .'" > <td>' . $row['id'] .  '</td><td> ' .  $row['username'] . '</td><td> ' . date( 'd/m/Y H:i:s', $phpdate ) . ' </td><td> ' . $row['name'] . ' </td> <td> ' . $row['answer'] . ' </td> <td> ' . number_format($row['score'] , 5, '.', ','). ' </td> </tr>';
+            //               echo '<tr bgcolor="'. $bgColor .'" > <td>' . $row['id'] .  '</td><td> ' .  $row['username'] . '</td><td> ' . date( 'd/m/Y H:i:s', $phpdate ) . ' </td><td> ' . $row['name'] . ' </td> <td> ';
+                            echo '<tr bgcolor="'. $bgColor .'" > <td><a href="' . $row['file'] . '">' . $row['id'] .  '</a> </td> <td> ' .  $row['username'] . '</td><td> ' . date( 'd/m/Y H:i:s', $phpdate ) . ' </td><td> ' . $row['name'] . ' </td> <td> ';
             //               echo $row['answer'] ;
                           $answers = array( 'accepted' , 'wrong answer', 'runtime error', 'compilation error', 'pending', 'submitted file corrupted', 'time out');
                           echo '<select id="id_answser_' . ($index-1) . '" onchange="setSelect(' . ($index-1) . ')">>';
@@ -164,9 +164,9 @@
                           }
                           echo '</select>';
                           // <option value="accepted">accepted</option> <option value="wrong answer" selected>wrong answer</option> <option value="runtime error">runtime error</option> <option value="compilation error">compilation error</option> <option value="pending">pending</option></select>';
-                          echo '</th><th> <a href="javascript:pInfo('.  ($index - 1) .');"> info </a> <input type="hidden" id="id_info_'.  ($index - 1) .'" name="numberrow" value="'.   $row['info'] .'"> </th>';
-                          echo '<th> ' . number_format($row['score'] , 3, '.', ','). ' </th>';
-                          echo ' </th> <th> <input type="text" id="id_elapsedtime_'.  ($index - 1) .'" value="' . number_format($row['elapsedtime'] , 5, '.', ','). '" maxlength="20" size="10" onkeypress="return isNumberKey(event, '. ($index - 1) .')" > <input type="text" id="id_p_elapsedtime_'.  ($index - 1) .'" value="' . number_format($row['time'] , 5, '.', ','). '" size="10" readonly> </th> <th> <input type="hidden" id="id_updated_' . ($index-1) . '"  name="numberrow" value="0"> <input type="hidden" id="id_submissionID_'.  ($index - 1) .'" name="numberrow" value="'.   $row['id'] .'"> </th> </tr>';
+                          echo '</td><td> <a href="javascript:pInfo('.  ($index - 1) .');"> info </a> <input type="hidden" id="id_info_'.  ($index - 1) .'" name="numberrow" value="'.   $row['info'] .'"> </td>';
+                          echo '<td> ' . number_format($row['score'] , 3, '.', ','). ' </td>';
+                          echo ' </td> <td> <input type="text" id="id_elapsedtime_'.  ($index - 1) .'" value="' . number_format($row['elapsedtime'] , 5, '.', ','). '" maxlength="20" size="10" onkeypress="return isNumberKey(event, '. ($index - 1) .')" > <input type="text" id="id_p_elapsedtime_'.  ($index - 1) .'" value="' . number_format($row['time'] , 5, '.', ','). '" size="10" readonly> </td> <td> <input type="hidden" id="id_updated_' . ($index-1) . '"  name="numberrow" value="0"> <input type="hidden" id="id_submissionID_'.  ($index - 1) .'" name="numberrow" value="'.   $row['id'] .'"> </td> </tr>';
                           $index++;
                         }//end-if($row = $result->fetch_assoc()) {
                           echo '</tbody>';

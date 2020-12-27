@@ -105,3 +105,33 @@ function top10Submission(obj){
   else
     window.open("mainjudge.php","_self");
 }
+
+function onClearJudgeClarrification(){
+  document.getElementById("id_doubt").value = "";
+ document.getElementById("id_answerCheck").value = "-1";
+}
+
+function checkboxClickJudgeClarrification(obj){
+
+  var obj_id = obj.id;
+  var checkbox = document.getElementById(obj_id);
+  var checked = checkbox.checked;
+  var size = document.getElementById('id_numberrow').value;
+  var opt = -1;
+  for (i = 1; i <= size; i++){
+    var checkid = 'id_check_' + i.toString();
+    if ( checkid != obj_id){
+      //document.getElementById(checkid)
+      document.getElementById(checkid).disabled = checked;
+    }//end-if (document.getElementById(checkid) != obj_id){
+    else { opt = i; }
+  }//end-for (i = 1; i <= size; i++){
+
+  var option = 'id_doubt_' + opt.toString();
+  if (checked){
+    document.getElementById('id_answerCheck').value = document.getElementById(option).value;
+
+  }else{
+    document.getElementById('id_answerCheck').value = '-1';
+  }//end-if (checked){
+}//end-function checkboxClick(obj){

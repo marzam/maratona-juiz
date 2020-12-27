@@ -128,13 +128,17 @@ function simpleScoreTable(){
   }//end-if ($result->num_rows > 0) {
 */
 
-  echo '<h1 align="center"> Pontuação </h1>';
-  echo '<table border="0" style="width:100%;">';
-    echo '<colgroup>';
-       echo '<col style="width:80%;">';
-       echo '<col style="width:20%;">';
-    echo '</colgroup>';
-      echo '<tr bgcolor="#afafaf"> <th> equipe </th><th> problemas resolvidos/total </th><th>  pontuação </th> </tr>';
+  echo '<h3> Pontuação </h3>';
+  echo '<table style="width:100%;">';
+          echo '<thead>';
+          echo '<tr>';
+          echo '<th scope="col">Equipe</th>';
+          echo '<th scope="col">Problemas resolvidos/total</th>';
+          echo '<th scope="col">Pontuação</th>';
+          echo '</tr>';
+          echo '</thead>';
+          echo '<tbody>';
+      
       $index = 1;
       //$sql = 'SELECT SUM(speedup) as speedup, login.name as team FROM (SELECT MAX(score.speedup) as speedup, problem_id, user_id from score GROUP BY score.user_id, score.problem_id) AS temp INNER JOIN login ON login.id = temp.user_id GROUP BY user_id ORDER BY speedup DESC;';
       //$sql = 'SELECT SUM(score) as score, login.username as team FROM (SELECT MAX(submission.score) as score, problem_id, user_id FROM submission GROUP BY submission.user_id, submission.problem_id) AS temp INNER JOIN login ON login.id = temp.user_id GROUP BY user_id ORDER BY score DESC;';
@@ -148,13 +152,13 @@ function simpleScoreTable(){
           if (($index % 2) == 0)
            $bgColor = '#d0d0d0';
 
-          echo '<tr bgcolor="'. $bgColor .'" > <th  align="left">' . $row['team'] .  '</a> </th><th align="right"> '. $row['total'] .'/'. $nProblems .'  </th> <th align="right"> ' .  number_format(($row['score']) , 5, '.', ',') . ' </th>  </tr>';
+          echo '<tr bgcolor="'. $bgColor .'" > <td  align="left">' . $row['team'] .  '</a> </td><td align="right"> '. $row['total'] .'/'. $nProblems .'  </td> <td align="right"> ' .  number_format(($row['score']) , 5, '.', ',') . ' </td>  </tr>';
           $index++;
 
         }//end-if($row = $result->fetch_assoc()) {
 
       }//end-if ($result->num_rows > 0) {
-
+  echo '</tbody>';
   echo '</table>';
 }
 

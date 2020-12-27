@@ -63,7 +63,7 @@
             </li>
 -->
             <li class="nav-item">
-              <a class="nav-link" href="#">[Lista de problemas] <span class="sr-only"></span></a>
+            <a class="nav-link" href="listproblems.php">Lista de problemas</a>
               
             </li>
 
@@ -72,7 +72,7 @@
             </li>
 
             <li class="nav-item">
-              <a class="nav-link" href="score-judge.php">Pontuação</a>
+              <a class="nav-link" href="#">[Pontuação]<span class="sr-only"></span></a>
             </li>
 
             <li class="nav-item">
@@ -110,43 +110,8 @@
               </div> -->
 
 <!--- Inserting content -->
-                      <form action="addproblem.php"  method="post" enctype="multipart/form-data" id="listForm">
-                          <?php
-                              $sql = 'SELECT * from problem;';
-                              $result   = execQuery($sql);
-                              if ($result->num_rows > 0) {
-                                  echo '<h3> Problemas cadastrados </h3>';
-                                  echo '<table class="table table-condensed">';
-                                  echo '<thead>';
-                                  echo '<tr>';
-                                  echo '<th>ID</th>';
-                                  echo '<th>Nome</th>';
-                                  echo '<th >Tempo (s)</th>';
-                                  echo '<th>Visível</th>';
-                                  echo '</tr>';
-                                  echo '</thead>';
-                                  echo '<tbody>';
-//                                  echo '<tr  bgcolor="#afafaf"> <th>ID</th> <th>Nome</th> <th>Tempo (s)</th> <th>Visível</th> <th>Saída</th></tr>';
-                                  $index = 1;
-                                  while($row = $result->fetch_assoc()) {
-                                      $bgColor = '#dfdfdf';
-                                      if (($index % 2) == 0)
-                                      $bgColor = '#d0d0d0';
-//                                      echo '<tr bgcolor="'. $bgColor .'" > <td>' . $row['id'] .  '</td><td>  <a href="javascript:mySubmit(' . $row['id'] .  ')">' .  $row['name'] . '</a></td><td> ' .  number_format($row['time'] , 5, '.', ',') . ' </td><td> ' . $row['visible'] . ' </td>';
-                                      echo '<tr bgcolor="'. $bgColor .'" > <td>' . $row['id'] .  '</td><td>  <a href="javascript:mySubmit(' . $row['id'] .  ')">' .  $row['name'] . '</a></td><td> ' . money_format("%=_(#15.5n",$row['time']) . ' </td><td> ' . $row['visible'] . ' </td>';
-                                    $index++;
-                                  }//end-if($row = $result->fetch_assoc()) {
-                                  echo '</tbody>';
-                                  echo '</table>';
-                                  echo '<br>';
-                                  echo '<input type="hidden" id="id_id"  name="id_id" value="-1">';
-                              }//end-
-                          ?>
-                      </form>
 
-
-
-
+          <?php simpleScoreTable(); ?>
 <!--- End inserting content -->            
 
 
