@@ -14,7 +14,7 @@ function getContinue($strFinal){
 
 //      $dteDiff  = $dteStart->diff($dteEnd);
 
-//      return (bool) var_dump($currDate  < $finalDate );  
+//      return (bool) var_dump($currDate  < $finalDate );
 
   return intval($currDate < $finalDate);
 }
@@ -36,7 +36,7 @@ function printHeader(){
 
 //------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 function checkLoginTeam(){
-  
+
   $info     = $_COOKIE['login-team'];
   $aux = strpos($info,";");
   $id = substr($info, 0, $aux);
@@ -44,20 +44,20 @@ function checkLoginTeam(){
   $username = 'desconhecido';
   $name     = 'desconhecido';
   $team     = '';
-   
+
   $sql = 'select t1.name as team, t1.id as team_id, t2.id as id, t2.username as username, t2.name as name, t2.email as email FROM login as t2 inner join teams as t1 on t2.team_id = t1.id where t2.id="' . $id . '"; ';
- 
+
   return execQuery($sql);
 
 
-}   
+}
 
 
 
 function checkLoginJudge(){
   $ret = 0;
   $GLOBALS['id']       = $_COOKIE['login-judge'];
-  $GLOBALS['username'] = 'desconhecido'; 
+  $GLOBALS['username'] = 'desconhecido';
   $GLOBALS['name']     = 'desconhecido';
   $GLOBALS['team']     = '';
 
@@ -103,7 +103,7 @@ function execQuery($mysql){
 }
 
 function simpleScoreTable(){
-  
+
   $sql = 'SELECT  count(*) as problems FROM problem;';
   $result   = execQuery($sql);
   $nProblems = 0;
@@ -115,7 +115,7 @@ function simpleScoreTable(){
 
   }//end-if ($result->num_rows > 0) {
 
-/*    
+/*
   $sql = 'select count(*) as solved from (SELECT MAX(submission.score) as score, problem_id, user_id FROM submission GROUP BY submission.user_id, submission.problem_id) as aux;';
   $result   = execQuery($sql);
   $sProblems = 0;
@@ -138,7 +138,7 @@ function simpleScoreTable(){
           echo '</tr>';
           echo '</thead>';
           echo '<tbody>';
-      
+
       $index = 1;
       //$sql = 'SELECT SUM(speedup) as speedup, login.name as team FROM (SELECT MAX(score.speedup) as speedup, problem_id, user_id from score GROUP BY score.user_id, score.problem_id) AS temp INNER JOIN login ON login.id = temp.user_id GROUP BY user_id ORDER BY speedup DESC;';
       //$sql = 'SELECT SUM(score) as score, login.username as team FROM (SELECT MAX(submission.score) as score, problem_id, user_id FROM submission GROUP BY submission.user_id, submission.problem_id) AS temp INNER JOIN login ON login.id = temp.user_id GROUP BY user_id ORDER BY score DESC;';
