@@ -62,7 +62,7 @@ function checkLoginJudge(){
   $GLOBALS['team']     = '';
 
   $sql = 'select t1.name as team, t2.id as id, t2.username as username, t2.name as name FROM login as t2 inner join teams as t1 on t2.team_id = t1.id where t2.id="' . $GLOBALS['id'] . '"; ';
-//  echo $sql . '<hr>';
+  //echo $sql . '<hr>';
   $result = execQuery($sql);
 
   if ($result->num_rows > 0) {

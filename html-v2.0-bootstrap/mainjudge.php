@@ -7,17 +7,17 @@
       if ($_GET['all'])
         $all = 'checked';
       else
-        $all = '';  
+        $all = '';
       //end-if ($result->num_rows > 0) {
         //https://mdbootstrap.com/snippets/jquery/mdbootstrap/888438#
-        
+
 ?>
 
 <!DOCTYPE html>
 <html lang="br">
 
 <head>
-  <link rel="shortcut icon" href="#" /> 
+  <link rel="shortcut icon" href="#" />
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
   <meta name="description" content="">
@@ -30,7 +30,7 @@
   <link href="css-bootstrap/bootstrap.min.css" rel="stylesheet">
   <link href="css-p-judge/simple-sidebar.css" rel="stylesheet">
   <script type="text/javascript" src="js-p-judge/p-judge.js"></script>
-  
+
 
 </head>
 
@@ -46,7 +46,7 @@
         <td><h3> <?php echo $GLOBALS['judgeTitle']; ?> </h3></td>
         <td><h5>Usuário: [<strong class="text-muted"> <?php echo  $GLOBALS['username']; ?> </strong>] </h5></td>
       </tr>
-    </table> 
+    </table>
   </div>
 
   <div class="d-flex" id="wrapper">
@@ -87,27 +87,27 @@
                 Cadastro
               </a>
               <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdown">
-                <a class="dropdown-item" href="#">Times</a>
+                <a class="dropdown-item" href="addteam.php">Times</a>
                 <a class="dropdown-item" href="#">Maratonista</a>
                 <!-- <div class="dropdown-divider"></div> -->
                 <a class="dropdown-item" href="#">Problemas</a>
               </div>
             </li>
-            
+
           </ul>
         </div>
       </nav>
- 
 
-          
+
+
           <div class="container-fluid">
               <!-- begin content --------------------------------------------------------------------------------------------------- -->
-              <div  class="d-flex flex-row-reverse pt-2">   
-              <button class = "btn btn-sm btn-dark btn-block " type="button" onclick="updateSubmissionsCSV();">Atualizar</button> 
-              </div> 
+              <div  class="d-flex flex-row-reverse pt-2">
+              <button class = "btn btn-sm btn-dark btn-block " type="button" onclick="updateSubmissionsCSV();">Atualizar</button>
+              </div>
 <!-- -->
 <div class="invisible">
-<!-- <div class="visible"> --> 
+<!-- <div class="visible"> -->
            <form action="updatedSubmission.php"  method="post" id="id_form_send">
              <textarea id="idCSV" maxlength = "16384"  name = "idCSV"  style="resize: none;"></textarea><br>
             <!--  <input type="submit" value="Submit"> -->
@@ -118,7 +118,7 @@
   <input type="checkbox" id="id_all" name="id_all" value="Todas as submissões">   <label for="list_submission"> Todas as sub.</label>
 </div>-->
 
-              
+
               <?php
                       //$sql = 'SELECT submission.*,problem.name  FROM submission INNER JOIN problem ON problem.id = submission.problem_id ORDER by submission.moment DESC;';
                       if ($all == 'checked')
@@ -143,7 +143,7 @@
                         echo '</tr>';
                         echo '</thead>';
                         echo '<tbody>';
-                        
+
                         $index = 1;
                         while($row = $result->fetch_assoc()) {
                             $bgColor = '#eeeeee';
@@ -191,9 +191,9 @@
           </div>
     </div>
 
-            
- 
-  
+
+
+
       <script src="vendor/jquery/jquery.min.js"></script>
       <script src="vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
 
@@ -207,7 +207,7 @@
   </div>
 
 
-  
+
 
 
 </body>

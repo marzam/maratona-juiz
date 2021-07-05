@@ -1,5 +1,5 @@
-<?php  
-include 'vars.php'; 
+<?php
+include 'vars.php';
 include 'p-judge-lib.php';
 ?>
 
@@ -21,11 +21,7 @@ include 'p-judge-lib.php';
                 <p class="mt-4"> <input class = "btn btn-lg btn-dark btn-block" value="Logar" type="submit"> </p>
                 <p > <a href="javascript:forgot_password()">esqueceu sua senha ?</a> </p>
             </form>
-            
+
         </div>
     </body>
 </html>
-
-
-
-
