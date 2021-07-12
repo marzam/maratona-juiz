@@ -7,17 +7,17 @@
       if ($_GET['all'])
         $all = 'checked';
       else
-        $all = '';  
+        $all = '';
       //end-if ($result->num_rows > 0) {
         //https://mdbootstrap.com/snippets/jquery/mdbootstrap/888438#
-        
+
 ?>
 
 <!DOCTYPE html>
 <html lang="br">
 
 <head>
-  <link rel="shortcut icon" href="#" /> 
+  <link rel="shortcut icon" href="#" />
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
   <meta name="description" content="">
@@ -30,7 +30,7 @@
   <link href="css-bootstrap/bootstrap.min.css" rel="stylesheet">
   <link href="css-p-judge/simple-sidebar.css" rel="stylesheet">
   <script type="text/javascript" src="js-p-judge/p-judge.js"></script>
-  
+
 
 </head>
 
@@ -46,7 +46,7 @@
         <td><h3> <?php echo $GLOBALS['judgeTitle']; ?> </h3></td>
         <td><h5>Usuário: [<strong class="text-muted"> <?php echo  $GLOBALS['username']; ?> </strong>] </h5></td>
       </tr>
-    </table> 
+    </table>
   </div>
 
   <div class="d-flex" id="wrapper">
@@ -64,7 +64,7 @@
 -->
             <li class="nav-item">
             <a class="nav-link" href="listproblems.php">Lista de problemas</a>
-              
+
             </li>
 
             <li class="nav-item">
@@ -88,25 +88,26 @@
                 Cadastro
               </a>
               <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdown">
-                <a class="dropdown-item" href="#">Times</a>
-                <a class="dropdown-item" href="#">Maratonista</a>
+                <a class="dropdown-item" href="addteam.php">Times</a>
+                <a class="dropdown-item" href="addplayer.php">Maratonista</a>
                 <!-- <div class="dropdown-divider"></div> -->
-                <a class="dropdown-item" href="#">Problemas</a>
+                <a class="dropdown-item" href="addproblem.php">Problemas</a>
+
               </div>
             </li>
-            
+
           </ul>
         </div>
       </nav>
- 
 
-          
+
+
           <div class="container-fluid">
               <!-- begin content --------------------------------------------------------------------------------------------------- -->
               <!-- Any button on top and right position - any event -->
-              <!-- 
-              <div  class="d-flex flex-row-reverse pt-2">   
-                <button class = "btn btn-sm btn-dark btn-block " type="button" onclick="updateSubmissionsCSV();">Voltar</button> 
+              <!--
+              <div  class="d-flex flex-row-reverse pt-2">
+                <button class = "btn btn-sm btn-dark btn-block " type="button" onclick="updateSubmissionsCSV();">Voltar</button>
               </div> -->
 
 <!--- Inserting content -->
@@ -155,7 +156,7 @@
            </form>
 
 
-<!--- End inserting content -->            
+<!--- End inserting content -->
 
 
           </div> <!-- <div class="container-fluid"> -->
@@ -167,7 +168,7 @@
   </div> <!-- <div class="d-flex" id="wrapper"> -->
 
 
-  
+
 
 
 </body>

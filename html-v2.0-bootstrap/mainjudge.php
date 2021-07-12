@@ -1,5 +1,4 @@
 <?php
-
       include 'vars.php';
       include 'p-judge-lib.php';
       $result   = checkLoginJudge();
@@ -10,12 +9,10 @@
         $all = '';
       //end-if ($result->num_rows > 0) {
         //https://mdbootstrap.com/snippets/jquery/mdbootstrap/888438#
-
 ?>
 
 <!DOCTYPE html>
 <html lang="br">
-
 <head>
   <link rel="shortcut icon" href="#" />
   <meta charset="utf-8">
@@ -88,23 +85,19 @@
               </a>
               <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdown">
                 <a class="dropdown-item" href="addteam.php">Times</a>
-                <a class="dropdown-item" href="#">Maratonista</a>
+                <a class="dropdown-item" href="addplayer.php">Maratonista</a>
                 <!-- <div class="dropdown-divider"></div> -->
-                <a class="dropdown-item" href="#">Problemas</a>
+                <a class="dropdown-item" href="addproblem.php">Problemas</a>
               </div>
             </li>
-
           </ul>
         </div>
       </nav>
-
-
-
-          <div class="container-fluid">
-              <!-- begin content --------------------------------------------------------------------------------------------------- -->
-              <div  class="d-flex flex-row-reverse pt-2">
-              <button class = "btn btn-sm btn-dark btn-block " type="button" onclick="updateSubmissionsCSV();">Atualizar</button>
-              </div>
+      <div class="container-fluid">
+          <!-- begin content --------------------------------------------------------------------------------------------------- -->
+          <div  class="d-flex flex-row-reverse pt-2">
+          <button class = "btn btn-sm btn-dark btn-block " type="button" onclick="updateSubmissionsCSV();">Atualizar</button>
+      </div>
 <!-- -->
 <div class="invisible">
 <!-- <div class="visible"> -->
@@ -149,7 +142,7 @@
                             $bgColor = '#eeeeee';
                             if (($index % 2) == 0)
                               $bgColor = '#dadada';
-                          $phpdate = strtotime( $row['moment'] );
+                            $phpdate = strtotime( $row['moment'] );
             //               echo '<tr bgcolor="'. $bgColor .'" > <td>' . $row['id'] .  '</td><td> ' .  $row['username'] . '</td><td> ' . date( 'd/m/Y H:i:s', $phpdate ) . ' </td><td> ' . $row['name'] . ' </td> <td> ' . $row['answer'] . ' </td> <td> ' . number_format($row['score'] , 5, '.', ','). ' </td> </tr>';
             //               echo '<tr bgcolor="'. $bgColor .'" > <td>' . $row['id'] .  '</td><td> ' .  $row['username'] . '</td><td> ' . date( 'd/m/Y H:i:s', $phpdate ) . ' </td><td> ' . $row['name'] . ' </td> <td> ';
                             echo '<tr bgcolor="'. $bgColor .'" > <td><a href="' . $row['file'] . '">' . $row['id'] .  '</a> </td> <td> ' .  $row['username'] . '</td><td> ' . date( 'd/m/Y H:i:s', $phpdate ) . ' </td><td> ' . $row['name'] . ' </td> <td> ';

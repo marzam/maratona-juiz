@@ -7,20 +7,16 @@
   echo $sql . '<br>';
   $result = execQuery($sql);
 
-
   if ($result->num_rows > 0) {
       if($row = $result->fetch_assoc())
       {
         if ($row['fasscess'] == '0')
         {
           if ($row['type'] == '0'){//Judge
-
-
             setcookie('login-judge', $row['id'], time() + (60*60*24*1000));
             echo '<script>';
             echo 'window.open("mainjudge.php","_self")';
             echo '</script>';
-            
           }else if ($row['type'] == '1'){//team
             //echo 'team<br>'  ;
             /*

@@ -30,7 +30,20 @@
       <link href="css-bootstrap/bootstrap.min.css" rel="stylesheet">
       <link href="css-p-judge/simple-sidebar.css" rel="stylesheet">
       <script type="text/javascript" src="js-p-judge/p-judge.js"></script>
+      <script type="text/javascript">
+        function deleteTeam(id){
 
+          var answer = window.confirm('Deseja apagar mesmo o registro #' + id + ' ?');
+          if (answer) {
+              //some code
+              //document.cookie = "username=John Doe";
+              document.cookie = "delete_team=" + id;
+              window.open("deleteteam.php", "_self");
+              //alert('Deletado!');
+          }
+          return;
+        }
+      </script>
 
     </head>
 
@@ -39,7 +52,7 @@
       <div class="p-3 mb-1 bg-dark text-white text-center" >
         <table style="width:100%">
           <tr>
-            <th><h2> <?php echo $GLOBALS['eventTitle1']; ?> </h3></th>
+            <th><h2> <?php echo $GLOBALS['eventTitle1']; ?> </h2></th>
             <th><h5>Equipe: [<strong class="text-muted"> <?php echo $GLOBALS['team']; ?> </strong>]</h5></th>
           </tr>
           <tr>
@@ -88,9 +101,9 @@
                   </a>
                   <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdown">
                     <a class="dropdown-item" href="addteam.php">Times</a>
-                    <a class="dropdown-item" href="#">Maratonista</a>
+                    <a class="dropdown-item" href="addplayer.php">Maratonista</a>
                     <!-- <div class="dropdown-divider"></div> -->
-                    <a class="dropdown-item" href="#">Problemas</a>
+                    <a class="dropdown-item" href="addproblem.php">Problemas</a>
                   </div>
                 </li>
 
@@ -109,7 +122,7 @@
                     </tr>
                   </table>
                   <br><br>
-                  <form method="post" id="id_team" action="#" >
+                  <form method="post" id="id_team" action="insertteam.php" >
                     <div>
                       <div> <input id="idTeam" name="idTeam" type="text" placeholder="nome da equipe/time" required autofocus> </div>
                     </div>
@@ -130,7 +143,7 @@
                                       echo '<tr>';
                                       echo '<th scope="col">#</th>';
                                       echo '<th scope="col">Equipe</th>';
-                                      echo '<th scope="col">Apagar</th>';
+                                      echo '<th scope="col">&nbsp;</th>';
                                       //echo '<th scope="col">Editar</th>';
                                       echo '</tr>';
                                       echo '</thead>';
@@ -138,7 +151,14 @@
 
                                       $index = 1;
                                       while($row = $result->fetch_assoc()) {
-                                          echo '<tr> <td>' . $row['id'] .  '</td> <td> ' .  $row['name'] . '</td> <td> <input type="checkbox" id="id_delteam_' . $index . '" name="id_delteam_' . $index . '"> </td>';
+                                        //<div class="modal-footer"> <button type="button" class="btn btn-light" data-dismiss="modal">Cancel</button> <button type="button" class="btn btn-danger">Delete</button> </div>
+                                        echo '<tr>';
+                                          echo '<td>'. $row['id'] .  '</td>';
+                                          echo '<td>'. $row['name'] .  '</td>';
+                                          //echo '<td> <input type="checkbox" id="id_delteam_' . $index . '" name="id_delteam_' . $index . '"> </td>';
+                                          echo '<td> <button onclick="deleteTeam('. $row['id'] .  ')" type="button" id="id_delteam_' . $index . '" name="id_delteam_' . $index . '" class="btn btn-danger">Apagar</button> </td>';
+                                        echo '</tr>';
+//                                          echo '<tr> <td>' . $row['id'] .  '</td> <td> ' .  $row['name'] . '</td> <td> <input type="checkbox" id="id_delteam_' . $index . '" name="id_delteam_' . $index . '"> </td>';
                                       }//end-if($row = $result->fetch_assoc()) {
                                         echo '</tbody>';
                                       echo '</table>';
@@ -146,55 +166,6 @@
                                       echo '<input type="hidden" id="id_index_value"  name="numberrow" value="' . ($index-1) . '">';
                                     }//end-
                        ?>
-
-<!-- Example of table
-              <table class="table table-striped table-hover">
-                  <thead>
-                      <tr>
-                          <th>#</th>
-                          <th>Name</th>
-                          <th>Customer-ID</th>
-                          <th>Email</th>
-                      </tr>
-                  </thead>
-                  <tbody>
-                      <tr>
-                          <td>1</td>
-                          <td>John Pate</td>
-                          <td>AUSXYZ1481</td>
-                          <td>johnpate@mydomain.com</td>
-                      </tr>
-                      <tr>
-                          <td>2</td>
-                          <td>Gina Ray</td>
-                          <td>AUSXYZ2932</td>
-                          <td>ginaray@mydomain.com</td>
-                      </tr>
-                      <tr>
-                          <td>3</td>
-                          <td>Paul Smith</td>
-                          <td>AUSXYZ6381</td>
-                          <td>paulsmith@mydomain.com</td>
-                      </tr>
-                      <tr>
-                          <td>4</td>
-                          <td>Darryl Rob</td>
-                          <td>AUSXYZ7264</td>
-                          <td>darrylrob@mydomain.com</td>
-                      </tr>
-                      <tr>
-                          <td>5</td>
-                          <td>Tina Michael</td>
-                          <td>AUSXYZ8330</td>
-                          <td>tinamichael@mydomain.com</td>
-                      </tr>
-                  </tbody>
-              </table>
-          </div>
--->
-
-
-
           </div>
         </div>
 
